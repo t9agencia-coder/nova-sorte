@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg-fundo: #f4f5f7;
+    --laranja-btn: #ff6600;
+    --verde-valor: #00c853;
+    --verde-claro-bg: #eafaf1;
+    --vermelho-alerta: #e50000;
+    --texto-escuro: #1a1a1a;
+    --texto-cinza: #666666;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--texto-escuro);
+}
+
+/* --- CABEÇALHO --- */
+.header-top {
+    background: #ffffff;
+    text-align: center;
+    padding: 16px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; padding: 20px;
+}
+
+.modal-content {
+    background: #ffffff;
+    width: 100%; max-width: 340px;
+    border-radius: 30px;
+    padding: 35px 20px 25px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-icon {
+    width: 130px;
+    position: absolute;
+    top: -85px; left: 50%;
+    transform: translateX(-50%);
+}
+
+.modal-content h2 { font-size: 1.25rem; font-weight: 800; margin-top: 15px; margin-bottom: 8px; }
+.modal-content p { font-size: 0.8rem; color: var(--texto-cinza); line-height: 1.4; margin-bottom: 20px; }
+
+.valor-container {
+    color: var(--verde-valor);
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.timer-container {
+    display: flex; justify-content: center; align-items: center; gap: 4px;
+    font-size: 0.8rem; color: var(--texto-cinza); margin-bottom: 25px;
+}
+
+.time-box {
+    background: var(--vermelho-alerta); color: #ffffff;
+    padding: 3px 5px; border-radius: 4px; font-weight: 700;
+}
+
+.btn-sacar-modal {
+    background: var(--laranja-btn); color: #ffffff;
+    border: none; width: 100%; padding: 15px;
+    font-size: 1.05rem; font-weight: 700;
+    border-radius: 30px; cursor: pointer;
+}
+
+/* --- TELA PRINCIPAL (MAIN) --- */
+.main-container {
+    max-width: 480px; margin: 0 auto;
+    padding: 15px 15px 130px 15px; /* Espaço para o rodapé */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Confetes CSS imitando a imagem */
+.confetti { position: absolute; width: 8px; height: 12px; opacity: 0.6; z-index: -1; }
+.c1 { background: #ff9999; top: 10%; left: 10%; transform: rotate(45deg); }
+.c2 { background: #a2d9ce; top: 25%; right: 5%; transform: rotate(-30deg); }
+.c3 { background: #d7bde2; top: 50%; right: 10%; transform: rotate(15deg); }
+.c4 { background: #f9e79f; top: 60%; left: 8%; transform: rotate(70deg); }
+
+/* CARDS GERAIS */
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+/* Card Saldo */
+.card-saldo { display: flex; justify-content: space-between; align-items: center; }
+.label-saldo { font-size: 0.75rem; color: var(--texto-cinza); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+.status-dot { height: 8px; width: 8px; background: var(--verde-valor); border-radius: 50%; }
+.card-saldo h3 { font-size: 1.6rem; font-weight: 800; }
+.btn-mini-sacar { background: var(--laranja-btn); color: #fff; border: none; padding: 10px 22px; border-radius: 20px; font-weight: 700; }
+
+/* Card Concluído */
+.card-concluido {
+    background: #ffffff;
+    border: 1px solid #ffebd6;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.card-concluido h4 { font-size: 0.9rem; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+.valor-laranja { color: var(--laranja-btn); font-size: 1.4rem; font-weight: 800; }
+.icon-calendar { width: 70px; }
+
+/* Alerta Expira */
+.alerta-expira {
+    background: #fff5f5; border: 1px solid #ffd6d6;
+    padding: 12px; border-radius: 12px; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 8px;
+    color: #cc0000; font-size: 0.75rem;
+}
+.alerta-expira strong { font-weight: 800; }
+
+/* Lista Tarefas */
+.tarefa-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.tarefa-titulo { font-size: 0.85rem; font-weight: 500; color: var(--texto-escuro); margin-bottom: 4px; line-height: 1.3; }
+.pontos-laranja { color: var(--laranja-btn); font-weight: 800; font-size: 0.85rem; }
+.orange-icon { color: var(--laranja-btn); margin-right: 4px; }
+
+.badge-concluido {
+    background: var(--verde-claro-bg); border: 1px solid #c8e6c9; color: var(--verde-valor);
+    padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600;
+    display: flex; align-items: center; gap: 2px; white-space: nowrap;
+}
+
+.task-completed-box {
+    background: var(--verde-claro-bg); border: 1px solid #c8e6c9; color: var(--verde-valor);
+    padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;
+    margin-top: 15px; display: flex; align-items: center; gap: 4px;
+}
+
+.progress-row { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+.progress-bar-bg { background: #f0f0f0; height: 6px; border-radius: 3px; flex-grow: 1; }
+.progress-fill { background: var(--laranja-btn); height: 100%; border-radius: 3px; }
+.progress-text { font-size: 0.7rem; font-weight: 600; color: var(--texto-cinza); }
+
+/* --- FOOTER FIXO --- */
+.footer-fixo {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: #ffffff; padding: 15px 20px;
+    border-top: 1px solid #eeeeee; z-index: 100;
+}
+.btn-pix {
+    background: var(--laranja-btn); color: #ffffff; border: none; width: 100%; max-width: 480px;
+    margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 10px;
+    padding: 16px; border-radius: 12px; font-size: 1.05rem; font-weight: 800;
+}
+.seguranca { text-align: center; font-size: 0.7rem; color: #888888; margin-top: 10px; font-weight: 500; display: flex; justify-content: center; align-items: center; gap: 4px; }
+#timer-alerta{
+    font-weight: bold;
+}
+/* Adicione no final do seu arquivo style.css */
+
+.tarefa-sub {
+    font-size: 0.8rem;
+    color: var(--texto-escuro);
+    margin-top: 4px;
+}
+
+.fill-green {
+    background: var(--verde-valor) !important;
+}
+/* --- NOTIFICAÇÃO DE SAQUE (TOAST) --- */
+.toast-saque {
+    position: fixed;
+    top: -100px; /* Fica escondido fora da tela inicialmente */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 8px 20px 8px 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    z-index: 9990; /* Abaixo do modal overlay, mas acima do resto */
+    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Efeito "mola" suave */
+    min-width: 270px;
+    border: 1px solid #f0f0f0;
+}
+
+.toast-saque.show {
+    top: 20px; /* Posição na tela quando visível */
+}
+
+.toast-perfil {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.toast-texto {
+    flex-grow: 1;
+}
+
+.toast-texto p {
+    font-size: 0.85rem;
+    color: var(--texto-escuro);
+    margin-bottom: 2px;
+}
+
+.toast-texto p .texto-verde {
+    color: var(--verde-valor);
+    font-weight: 700;
+}
+
+.toast-texto span {
+    font-size: 0.65rem;
+    color: var(--texto-cinza);
+}
+
+.toast-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4ade80; /* Verde mais clarinho do pontinho */
+    border-radius: 50%;
+}
+/* --- MODAL PIX --- */
+.modal-pix-content {
+    text-align: left;
+    padding: 30px 25px;
+    max-width: 360px;
+}
+
+.close-modal-pix {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+}
+
+.pix-title {
+    font-size: 1.3rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    color: var(--texto-escuro);
+}
+
+.pix-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--texto-cinza);
+    margin-bottom: 25px;
+}
+
+.pix-subtitle i { font-size: 1rem; }
+.pix-subtitle .divisor { margin: 0 4px; color: #ccc; }
+.pix-subtitle strong { color: var(--texto-escuro); font-weight: 800; }
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--texto-cinza);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--texto-escuro);
+    outline: none;
+    transition: border 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--laranja-btn);
+}
+
+.pix-types {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-pix-type {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    color: var(--texto-cinza);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-pix-type.active {
+    border-color: var(--laranja-btn);
+    color: var(--laranja-btn);
+    background-color: #fff9f5;
+    font-weight: 700;
+}
+
+.btn-validar {
+    background: #f16d1a; /* Laranja suave igual da imagem */
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(252, 173, 124, 0.4);
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.pix-footer-text {
+    font-size: 0.65rem !important;
+    color: #aaa !important;
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+/* --- ESTILOS DA VALIDAÇÃO (LOADING E SUCESSO) --- */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    padding-right: 40px; /* Dá espaço para o ícone não ficar em cima do texto */
+}
+
+.input-wrapper i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.icon-laranja { color: #ff8c00; }
+.icon-verde { color: #00c853; }
+
+/* Caixa de Status */
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.status-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-texts strong { font-size: 0.9rem; color: #1a1a1a; }
+.status-texts span { font-size: 0.75rem; color: #666; margin-top: 2px; }
+
+/* Estado Loading */
+.status-box.loading {
+    background-color: #fff9f5;
+    border: 1px solid #ffe0cc;
+}
+.status-box.loading i { color: #ff8c00; font-size: 1.5rem; }
+
+/* Estado Sucesso */
+.status-box.success {
+    background-color: #eafaf1;
+    border: 1px solid #c8e6c9;
+}
+.status-box.success i { color: #00c853; font-size: 1.5rem; }
+
+/* Botões da Validação */
+.btn-validar.btn-loading {
+    background: #ffbba3; /* Laranja desbotado */
+    box-shadow: none;
+    cursor: not-allowed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-validar.btn-success {
+    background: var(--laranja-btn); /* Laranja vibrante */
+    box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+    text-transform: uppercase;
+}
+
+/* Botão desabilitado (apagado) */
+.btn-validar.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Opcional: input inválido/ok (leve) */
+.input-group input.is-invalid {
+  border-color: #ffb3b3;
+}
+
+.input-group input.is-valid {
+  border-color: #ff6600;
+}
+
+.header-top {
+    width: 100%;
+    background-color: #ffffff; /* Laranja da marca */
+    padding: 5px 0;
+    text-align: center;
+    /* Uma borda inferior bem sutil em vez de uma sombra pesada */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-texto {
+    color: #ff6600;
+    /* Usando fontes que o navegador já tem e são lindas (Inter, System) */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700; /* Negrito elegante, não exagerado */
+    letter-spacing: -1px; /* Aproximação sutil */
+    margin: 0;
+    display: inline-block;
+}
+
+.logo-texto span {
+    font-weight: 900; /* O "Bonus" ganha um destaque de peso, mas na mesma fonte */
+    opacity: 0.95; /* Um toque de suavidade */
+}
+
+/* Efeito de brilho suave que passa pelo texto (Opcional, mas muito elegante) */
+.logo-texto {
+    position: relative;
+    overflow: hidden;
+}

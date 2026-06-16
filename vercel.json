@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "**/*.css", "use": "@vercel/static" },
+    { "src": "**/*.js", "use": "@vercel/static" },
+    { "src": "images/**/*", "use": "@vercel/static" },
+    { "src": "fonts/**/*", "use": "@vercel/static" },
+    { "src": "media/**/*", "use": "@vercel/static" },
+    { "src": "saque/images/**/*", "use": "@vercel/static" },
+    { "src": "up1/images/**/*", "use": "@vercel/static" },
+    { "src": "up3/images/**/*", "use": "@vercel/static" },
+    { "src": "up5/images/**/*", "use": "@vercel/static" },
+    { "src": "up6/images/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/saque/(.*)", "dest": "/saque/$1" },
+    { "src": "/up1/(.*)", "dest": "/up1/$1" },
+    { "src": "/up2/(.*)", "dest": "/up2/$1" },
+    { "src": "/up3/(.*)", "dest": "/up3/$1" },
+    { "src": "/up4/(.*)", "dest": "/up4/$1" },
+    { "src": "/up5/(.*)", "dest": "/up5/$1" },
+    { "src": "/up6/(.*)", "dest": "/up6/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ],
+  "rewrites": [
+    { "source": "/kwai_event.php", "destination": "/api/kwai-event" },
+    { "source": "/gerar_pix.php", "destination": "/api/gerar-pix" },
+    { "source": "/consultar_pagamento.php", "destination": "/api/consultar-pagamento" }
+  ]
+}

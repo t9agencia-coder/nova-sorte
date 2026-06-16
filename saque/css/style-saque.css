@@ -1,0 +1,1267 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f6f6f6; /* Fundo cinza clarinho da imagem */
+    color: #1a1a1a;
+}
+
+/* --- TELA DE LOADING --- */
+.loading-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+}
+
+/* Spinner Giratório */
+.spinner-custom {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ffe0cc; /* Laranja clarinho no fundo */
+    border-top: 4px solid #ff6600; /* Laranja forte girando */
+    border-radius: 50%;
+    margin: 0 auto 25px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Textos do Loading */
+.loading-content h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+}
+
+.loading-content p {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 15px;
+}
+
+/* Barra de Progresso */
+.loading-bar-bg {
+    background-color: #ffeae0; /* Fundo da barrinha */
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.loading-bar-fill {
+    background-color: #ff6600;
+    height: 100%;
+    width: 0%; /* Começa zerada */
+    border-radius: 10px;
+    transition: width 0.1s linear; /* Deixa o avanço suave */
+}
+
+/* Main Container (que usaremos depois) */
+.main-container {
+    max-width: 480px;
+    margin: 0 auto;
+    transition: opacity 0.5s ease;
+}
+/* --- TELA PRINCIPAL (PÓS-LOADING) --- */
+.header-top {
+    background: #ffffff;
+    text-align: center;
+    padding: 18px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 15px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 0 15px 15px 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* Alerta Laranja */
+.alerta-identidade {
+    background: #fff5eb;
+    border: 1px solid #ffe0cc;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.icone-alerta {
+    font-size: 1.8rem;
+    color: #ff6600;
+    margin-top: 2px;
+}
+
+.alerta-texto h4 {
+    color: #ff6600;
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.alerta-texto p {
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+/* Dados do Saque */
+.titulo-dados {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
+
+.lista-dados {
+    list-style: none;
+}
+
+.lista-dados li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.lista-dados li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.dado-label {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.dado-valor {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: right;
+}
+
+.texto-verde {
+    color: #00c853;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+/* Resumo da Taxa */
+.taxa-resumo {
+    background: #fdfdfd;
+}
+
+.taxa-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.taxa-linha span { color: #666; font-weight: 600; }
+.taxa-linha strong { color: #1a1a1a; font-size: 1.1rem; font-weight: 800; }
+
+/* Footer Fixo */
+.footer-fixo {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%;
+    background: #ffffff;
+    padding: 15px 20px 25px 20px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+}
+
+.btn-pix {
+    background: #ff6600;
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 18px;
+    border-radius: 15px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+}
+
+.seguranca {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #aaa;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+/* --- PROCESSO DE LIBERAÇÃO --- */
+.processo-titulo {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.space-y-4 > * + * {
+    margin-top: 16px;
+}
+
+.passo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.passo-numero {
+    width: 28px;
+    height: 28px;
+    background: #f0f0f0;
+    color: #888;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.passo-icon-bg {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 107, 0, 0.1); /* Laranja clarinho */
+    color: #ff6600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.passo-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.texto-laranja {
+    color: #ff6600;
+}
+
+.passo-sub {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+/* Rodapé de Ação */
+.container-acao {
+    padding: 20px 15px 40px;
+    text-align: center;
+}
+
+.info-reembolso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 15px;
+    color: #ff6600;
+}
+
+.info-reembolso i {
+    font-size: 1rem;
+}
+
+.info-reembolso span {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Estilo Luxury do Botão */
+.btn-pix {
+    background: #ff6600;
+    box-shadow: 0 8px 25px rgba(255, 102, 0, 0.3);
+    border-radius: 18px;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+
+.btn-pix:active {
+    transform: scale(0.98);
+}/* Estilo do Card Laranja */
+.card-saldo-principal {
+    background: linear-gradient(135deg, #f27121, #e94e1b);
+    color: white;
+    text-align: left;
+}
+.label-saldo { font-size: 0.65rem; font-weight: 700; opacity: 0.9; letter-spacing: 0.5px; }
+.valor-saldo { font-size: 2.2rem; font-weight: 800; margin: 5px 0; }
+.sub-saldo { font-size: 0.75rem; opacity: 0.8; }
+
+/* Badge Reembolsável */
+.linha-taxa-destaque { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.valor-taxa-dinamica { color: #ff6600; font-size: 1.8rem; font-weight: 800; }
+.badge-reembolsavel { 
+    background: #e6f9ee; color: #00c853; font-size: 0.6rem; 
+    font-weight: 700; padding: 4px 8px; border-radius: 6px; 
+}
+.texto-informativo { font-size: 0.75rem; color: #666; line-height: 1.5; }
+
+/* Lista de Reembolso */
+.lista-reembolso { list-style: none; }
+.lista-reembolso li { 
+    display: flex; justify-content: space-between; 
+    padding: 12px 0; border-bottom: 1px solid #f2f2f2; 
+    font-size: 0.85rem;
+}
+.lista-reembolso li span { color: #888; }
+.total-final { font-size: 1rem; color: #1a1a1a; font-weight: 800; }
+
+/* Campo de CPF cinza */
+.cpf-container {
+    background: #f8f8f8; padding: 15px; border-radius: 12px;
+    text-align: center; margin-top: 15px; font-weight: 600; color: #333;
+}
+
+.texto-verde-sucesso { color: #00c853 !important; }
+.modal-pix-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-pix-content {
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.timer-box {
+    background: #fff5f0;
+    padding: 15px;
+    border-bottom: 1px solid #ffe0d0;
+}
+
+.btn-copiar-pix {
+    background: #f37021;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#pix-copia-cola {
+    width: 100%;
+    height: 60px;
+    font-size: 11px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+}
+/* --- MODAL PIX ATUALIZADO (IGUAL ÀS IMAGENS) --- */
+.modal-pix-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); /* Escurece mais o fundo */
+    z-index: 10000;
+    display: none; /* Controlado pelo JS */
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    backdrop-filter: blur(4px); /* Efeito de desfoque no fundo */
+}
+
+.modal-pix-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 24px;
+    overflow-y: auto;
+    max-height: 90vh;
+    position: relative;
+    padding: 0;
+    animation: modalSlideUp 0.3s ease-out;
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Cabeçalho do Modal (Saldo e Expira) */
+.modal-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-header-info .info-group {
+    text-align: left;
+}
+
+.modal-header-info .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    display: block;
+}
+
+.modal-header-info .value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+}
+
+/* Container do QR Code */
+.qr-container-box {
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.qr-container-box h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+.qr-container-box p {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#qr-code-img {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+    display: block;
+    padding: 10px;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+}
+
+/* Área do Código Copia e Cola */
+.pix-input-container {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+}
+
+#pix-copia-cola {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 0.7rem;
+    color: #444;
+    word-break: break-all;
+    resize: none;
+    height: 60px;
+    outline: none;
+}
+
+/* Botão Copiar (Estilo Laranja Vibrante) */
+.btn-copiar-pix-modal {
+    background: #ff6600;
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.2);
+}
+
+/* --- BOXES DE STATUS (IGUAL ÀS IMAGENS) --- */
+.status-box {
+    margin: 15px 20px;
+    padding: 15px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+/* Aguardando Pagamento */
+.status-waiting {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+}
+
+.spinner-mini {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #eee;
+    border-top: 2px solid #ff6600;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 66 Pessoas Sacando (Verde) */
+.status-social {
+    background: #f0fff4;
+    border: 1px solid #c6f6d5;
+    color: #2f855a;
+}
+
+.status-social i { font-size: 1.2rem; }
+
+/* Alerta de Perda (Rosa/Vermelho) */
+.status-danger {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+}
+
+.status-danger i { color: #e53e3e; font-size: 1.2rem; }
+
+.status-text h5 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.status-text p {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+/* Footer do Modal */
+.modal-footer-security {
+    padding: 20px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+/* =========================================================
+   MODAL PIX (UPGRADE VISUAL + CONSISTÊNCIA)
+   Cole este bloco no FINAL do seu CSS
+========================================================= */
+
+:root{
+  --orange: #ff6600;
+  --orange-2: #f37021;
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --muted: #7a7a7a;
+  --border: #eeeeee;
+  --shadow: 0 20px 60px rgba(0,0,0,.18);
+     --laranja-btn: #ff6600;
+    --verde-valor: #00c853;
+    --verde-claro-bg: #eafaf1;
+    --vermelho-alerta: #e50000;
+    --texto-escuro: #1a1a1a;
+    --texto-cinza: #666666;
+}
+
+/* Overlay */
+.modal-pix-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.78);
+  z-index: 10000;
+  display: none; /* JS controla */
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Conteúdo */
+.modal-pix-content{
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: modalIn .22s ease-out forwards;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+@keyframes modalIn{
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Header do modal (topo com título) */
+.modal-header{
+  padding: 18px 18px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.modal-header h3{
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -.2px;
+}
+
+/* Box saldo + expira */
+.timer-box{
+  padding: 16px 18px;
+  background: linear-gradient(180deg, #fff6ef, #ffffff);
+  border-bottom: 1px solid #ffe6d8;
+  text-align: left;
+}
+
+.timer-box span{
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 800;
+  color: #a06a52;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.valor-saldo-modal{
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.countdown{
+  font-size: .8rem;
+  font-weight: 800;
+  color: #a06a52;
+}
+
+.countdown #expira-timer{
+  color: var(--orange);
+}
+
+/* Seção QR */
+.qr-code-section{
+  padding: 18px;
+  text-align: center;
+}
+
+.qr-code-section h4{
+  font-size: 1.02rem;
+  font-weight: 900;
+  color: var(--text);
+  margin: 2px 0 6px;
+  letter-spacing: -.2px;
+}
+
+.qr-code-section p{
+  font-size: .8rem;
+  color: #6b6b6b;
+  line-height: 1.35;
+  margin: 0 0 14px;
+}
+
+/* Moldura do QR */
+.qr-code-placeholder{
+  width: fit-content;
+  margin: 0 auto 14px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+
+#qr-code-img{
+  width: 190px;
+  height: 190px;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Container do copia e cola */
+.copy-paste-container{
+  margin-top: 10px;
+  text-align: left;
+}
+
+/* Textarea estilo “field” */
+#pix-copia-cola{
+  width: 100%;
+  height: 74px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid #ececec;
+  background: #fafafa;
+  font-size: .72rem;
+  color: #3d3d3d;
+  line-height: 1.25;
+  resize: none;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  word-break: break-all;
+}
+
+#pix-copia-cola:focus{
+  border-color: rgba(255,102,0,.35);
+  box-shadow: 0 0 0 4px rgba(255,102,0,.12);
+  background: #fff;
+}
+
+/* Botão copiar (mais premium) */
+.btn-copiar-pix{
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 14px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--orange), #ff7a26);
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 10px 22px rgba(255,102,0,.25);
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+}
+
+.btn-copiar-pix:hover{
+  filter: brightness(1.02);
+  box-shadow: 0 12px 26px rgba(255,102,0,.28);
+}
+
+.btn-copiar-pix:active{
+  transform: scale(.985);
+}
+
+/* Status pagamento */
+.status-pagamento{
+  margin: 14px 18px 0;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  text-align: left;
+}
+
+.status-pagamento span{
+  font-size: .86rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.status-pagamento p{
+  grid-column: 2 / 3;
+  margin: 2px 0 0;
+  font-size: .74rem;
+  color: #7b7b7b;
+}
+
+/* Spinner pequeno */
+.spinner-small{
+  width: 18px;
+  height: 18px;
+  border: 2px solid #eee;
+  border-top: 2px solid var(--orange);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-top: 2px;
+}
+
+/* Social proof */
+.alerta-saque{
+  margin: 12px 18px 18px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid #c6f6d5;
+  background: #f0fff4;
+  color: #2f855a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.alerta-saque i{
+  font-size: 1.15rem;
+}
+
+/* Responsivo */
+@media (max-width: 380px){
+  .modal-pix-content{ border-radius: 18px; }
+  #qr-code-img{ width: 170px; height: 170px; }
+  .valor-saldo-modal{ font-size: 1.45rem; }
+}
+
+/* (Opcional) animação de saída: adicione a classe .closing via JS antes de esconder */
+.modal-pix-content.closing{
+  animation: modalOut .18s ease-in forwards;
+}
+@keyframes modalOut{
+  to { transform: translateY(10px); opacity: 0; }
+  
+}
+
+/* TOAST SAQUE (fixo no topo, sempre visível) */
+#toast-saque.toast-saque{
+  position: fixed !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+width: 80%;
+  background: #ffffff;
+  border-radius: 40px;
+  padding: 8px 20px 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  z-index: 10001; /* acima do modal */
+  min-width: 270px;
+  border: 1px solid #f0f0f0;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: top 0.5s cubic-bezier(0.68,-0.55,0.265,1.55), opacity 0.25s ease;
+}
+
+#toast-saque.toast-saque.show{
+  opacity: 1;
+}
+
+/* Se quiser esconder “subindo” de novo */
+#toast-saque.toast-saque.hide{
+  top: -120px !important;
+  opacity: 0 !important;
+}
+
+.toast-perfil {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.toast-texto {
+    flex-grow: 1;
+}
+
+.toast-texto p {
+    font-size: 0.85rem;
+    color: var(--texto-escuro);
+    margin-bottom: 2px;
+}
+
+.toast-texto p .texto-verde {
+    color: var(--verde-valor);
+    font-weight: 700;
+}
+
+.toast-texto span {
+    font-size: 0.65rem;
+    color: var(--texto-cinza);
+}
+
+.toast-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4ade80; /* Verde mais clarinho do pontinho */
+    border-radius: 50%;
+}
+/* ================================
+   MODAL PIX — IDÊNTICO AOS PRINTS
+   Cole no FINAL do CSS
+================================ */
+
+/* Overlay */
+.modal-pix-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 10000;
+  display: none;          /* JS controla */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Conteúdo: desktop/tablet fica centralizado, mobile vira fullscreen */
+.modal-pix-content{
+  width: 100%;
+  max-width: 430px;
+  background: #f6f6f6;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+}
+
+/* FULLSCREEN NO MOBILE */
+@media (max-width: 520px){
+  .modal-pix-overlay{
+    background: #f6f6f6;     /* some com o “fundo escuro” no mobile igual print */
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .modal-pix-content{
+    max-width: none;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Topo */
+.modal-top{
+  background: #ffffff;
+  padding: 18px 16px;
+  text-align: center;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.modal-title{
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+/* Cards base */
+.modal-pix-content .card{
+  background: #ffffff;
+  border-radius: 16px;
+  margin: 14px 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  border: 1px solid #f0f0f0;
+}
+
+/* Card saldo + expira */
+.card-saldo-expira{
+  background: #fff5eb !important;
+  border: 1px solid #ffe0cc !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-label{
+  display: block;
+  font-size: .65rem;
+  font-weight: 800;
+  color: #9a6b54;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.mini-right{ text-align: right; }
+
+.saldo-valor{
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+.expira-valor{
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+#expira-timer{
+  color: #1a1a1a; /* no print parece preto */
+}
+
+/* Card PIX */
+.card-pix{
+  text-align: center;
+}
+
+.pix-title{
+  font-size: 1rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+.pix-subtitle{
+  font-size: .78rem;
+  color: #6b6b6b;
+  margin-bottom: 14px;
+}
+
+/* QR */
+.qr-wrap{
+  width: fit-content;
+  margin: 0 auto 14px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid #efefef;
+  background: #fff;
+}
+
+#qr-code-img{
+  width: 190px;
+  height: 190px;
+  display: block;
+}
+
+/* Caixa copia e cola */
+.pix-code-box{
+  background: #f8f8f8;
+  border: 1px solid #ededed;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+#pix-copia-cola{
+  width: 100%;
+  height: 64px;
+  border: none;
+  resize: none;
+  outline: none;
+  background: transparent;
+  font-size: 11px;
+  color: #444;
+  line-height: 1.25;
+  word-break: break-all;
+}
+
+/* Botão laranja grande */
+.btn-copiar-pix{
+  width: calc(100% - 28px);
+  margin: 0 14px 10px;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 14px;
+  background: #ff6600;
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 8px 18px rgba(255,102,0,.22);
+  cursor: pointer;
+}
+
+.btn-copiar-pix:active{ transform: scale(.99); }
+
+.btn-copiar-pix-bottom{
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+/* Cards de status (iguais ao print) */
+.status-card{
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+}
+
+.status-card i{
+  font-size: 1.2rem;
+  margin-top: 1px;
+}
+
+.status-text strong{
+  display: block;
+  font-size: .9rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 3px;
+}
+
+.status-text span{
+  display: block;
+  font-size: .74rem;
+  color: #7b7b7b;
+  line-height: 1.25;
+}
+
+/* Aguardando pagamento */
+.status-wait{
+  background: #ffffff !important;
+}
+
+.spinner-small{
+  width: 18px;
+  height: 18px;
+  border: 2px solid #eee;
+  border-top: 2px solid #ff6600;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Verde */
+.status-green{
+  background: #f0fff4 !important;
+  border-color: #c6f6d5 !important;
+}
+
+.status-green .status-text strong{ color: #1a1a1a; }
+.status-green .status-text span{ color: #2f855a; }
+
+/* Vermelho */
+.status-red{
+  background: #fff5f5 !important;
+  border-color: #feb2b2 !important;
+}
+
+.status-red i{ color: #e53e3e; }
+
+/* Rodapé segurança */
+.modal-security{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #8a8a8a;
+  font-size: .75rem;
+  padding: 10px 14px 18px;
+}
+/* Modal fullscreen com scroll interno */
+@media (max-width: 520px){
+  .modal-pix-overlay{
+    background: #f6f6f6;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .modal-pix-content{
+    height: 100vh;                 /* ocupa 100% da tela */
+    max-height: 100vh;
+    overflow-y: auto;              /* SCROLL AQUI */
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* (Opcional) garante scroll também em telas maiores se passar do limite */
+.modal-pix-content{
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.footer-seguranca {
+    background-color: #ffffff;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+
+.footer-seguranca p {
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Espaço entre as logos */
+    flex-wrap: wrap;
+}
+
+.footer-logos img {
+    height: 40px; /* Ajusta a altura para ficarem uniformes */
+    width: auto;
+    filter: grayscale(0%); /* Se quiser deixar cinza, mude para 100% */
+    opacity: 0.8;
+}
+
+.footer-copyright {
+    margin-top: 20px;
+    font-size: 10px !important;
+    opacity: 0.6;
+}
+

