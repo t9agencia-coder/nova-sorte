@@ -61,17 +61,47 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${ddd[Math.floor(Math.random() * ddd.length)]}9${Math.floor(Math.random() * 90000000 + 10000000)}`;
     }
 
+    // ===== Detecta tipo da chave PIX informada =====
+    function detectarTipoChave(chave) {
+        const limpa = (chave || '').replace(/\D/g, '');
+        if (/^\d{11}$/.test(limpa)) return 'cpf';
+        if (/^\d{14}$/.test(limpa)) return 'cnpj';
+        if (chave.includes('@')) return 'email';
+        if (limpa.length >= 10 && /^1\d{1,2}9?\d{8}$/.test(limpa)) return 'phone';
+        if (limpa.length >= 10) return 'phone';
+        return 'random';
+    }
+
     // ===== Usa dados reais do usuário ou gera aleatórios =====
     function obterDadosParaPodPay() {
         const userData = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
         const saved = JSON.parse(localStorage.getItem('podpay_dados')) || {};
 
         const nome = userData.nomeCompleto || saved.nome || gerarNome();
-        const cpf = userData.chavePix || saved.cpf || gerarCPF();
-        const email = saved.email || gerarEmail(nome);
-        const telefone = saved.telefone || gerarTelefone();
+        const chaveOriginal = userData.chavePix || '';
+        const tipo = detectarTipoChave(chaveOriginal);
 
-        const dados = { nome, cpf, email, telefone };
+        let cpf, email, telefone;
+
+        if (tipo === 'cpf') {
+            cpf = chaveOriginal.replace(/\D/g, '');
+            email = saved.email || gerarEmail(nome);
+            telefone = saved.telefone || gerarTelefone();
+        } else if (tipo === 'email') {
+            cpf = saved.cpf || gerarCPF().replace(/\D/g, '');
+            email = chaveOriginal;
+            telefone = saved.telefone || gerarTelefone();
+        } else if (tipo === 'phone') {
+            cpf = saved.cpf || gerarCPF().replace(/\D/g, '');
+            email = saved.email || gerarEmail(nome);
+            telefone = chaveOriginal.replace(/\D/g, '');
+        } else {
+            cpf = saved.cpf || gerarCPF().replace(/\D/g, '');
+            email = saved.email || gerarEmail(nome);
+            telefone = saved.telefone || gerarTelefone();
+        }
+
+        const dados = { nome, cpf, email, telefone, chaveOriginal, tipoChave: userData.tipoChave || 'CPF' };
         localStorage.setItem('podpay_dados', JSON.stringify(dados));
         return dados;
     }
@@ -171,8 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const chaveEl = document.getElementById('confirm-chave');
 
         if (nomeEl) nomeEl.innerText = dados.nomeCompleto || podpayDados.nome;
-        if (tipoEl) tipoEl.innerText = dados.tipoChave || "CPF";
-        if (chaveEl) chaveEl.innerText = dados.chavePix || podpayDados.cpf;
+        if (tipoEl) tipoEl.innerText = podpayDados.tipoChave;
+        if (chaveEl) chaveEl.innerText = podpayDados.chaveOriginal || podpayDados.cpf;
     }
 
     // --- 6. AÇÃO DE GERAR PAGAMENTO VIA PODPAY ---
