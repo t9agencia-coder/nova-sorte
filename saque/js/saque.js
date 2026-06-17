@@ -61,19 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${ddd[Math.floor(Math.random() * ddd.length)]}9${Math.floor(Math.random() * 90000000 + 10000000)}`;
     }
 
-    // ===== Gera dados aleatórios e salva no formulário =====
-    function preencherDadosAleatorios() {
-        const nome = gerarNome();
-        const cpf = gerarCPF();
-        const email = gerarEmail(nome);
-        const telefone = gerarTelefone();
+    // ===== Usa dados reais do usuário ou gera aleatórios =====
+    function obterDadosParaPodPay() {
+        const userData = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
+        const saved = JSON.parse(localStorage.getItem('podpay_dados')) || {};
 
-        localStorage.setItem('podpay_dados', JSON.stringify({ nome, cpf, email, telefone }));
+        const nome = userData.nomeCompleto || saved.nome || gerarNome();
+        const cpf = userData.chavePix || saved.cpf || gerarCPF();
+        const email = saved.email || gerarEmail(nome);
+        const telefone = saved.telefone || gerarTelefone();
 
-        const nomeEl = document.getElementById('confirm-nome');
-        const chaveEl = document.getElementById('confirm-chave');
-        if (nomeEl) nomeEl.innerText = nome;
-        if (chaveEl) chaveEl.innerText = cpf;
+        const dados = { nome, cpf, email, telefone };
+        localStorage.setItem('podpay_dados', JSON.stringify(dados));
+        return dados;
     }
 
     // --- 1. SELETORES DE ELEMENTOS ---
@@ -165,14 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function carregarDadosUsuario() {
         const dados = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
-        const podpayDados = JSON.parse(localStorage.getItem('podpay_dados')) || {};
+        const podpayDados = obterDadosParaPodPay();
         const nomeEl = document.getElementById('confirm-nome');
         const tipoEl = document.getElementById('confirm-tipo');
         const chaveEl = document.getElementById('confirm-chave');
 
-        if (nomeEl) nomeEl.innerText = podpayDados.nome || dados.nomeCompleto || "Não informado";
+        if (nomeEl) nomeEl.innerText = dados.nomeCompleto || podpayDados.nome;
         if (tipoEl) tipoEl.innerText = dados.tipoChave || "CPF";
-        if (chaveEl) chaveEl.innerText = podpayDados.cpf || dados.chavePix || "---";
+        if (chaveEl) chaveEl.innerText = dados.chavePix || podpayDados.cpf;
     }
 
     // --- 6. AÇÃO DE GERAR PAGAMENTO VIA PODPAY ---
@@ -186,26 +186,17 @@ document.addEventListener("DOMContentLoaded", () => {
             var valorLimpo = parseFloat(taxaTexto.replace(/[^\d,]/g, '').replace(',', '.'));
             var amountCents = Math.round(valorLimpo * 100);
 
-            var dadosAleatorios = JSON.parse(localStorage.getItem('podpay_dados'));
-            if (!dadosAleatorios) {
-                dadosAleatorios = {
-                    nome: gerarNome(),
-                    cpf: gerarCPF(),
-                    email: gerarEmail(gerarNome()),
-                    telefone: gerarTelefone()
-                };
-                localStorage.setItem('podpay_dados', JSON.stringify(dadosAleatorios));
-            }
+            var podpayDados = obterDadosParaPodPay();
 
-            var cpfNumeros = dadosAleatorios.cpf.replace(/\D/g, '');
-            var telefoneNumeros = dadosAleatorios.telefone.replace(/\D/g, '');
+            var cpfNumeros = podpayDados.cpf.replace(/\D/g, '');
+            var telefoneNumeros = podpayDados.telefone.replace(/\D/g, '');
 
             var payload = {
                 amount: amountCents,
                 customer: {
-                    name: dadosAleatorios.nome,
+                    name: podpayDados.nome,
                     document: { type: "cpf", number: cpfNumeros },
-                    email: dadosAleatorios.email,
+                    email: podpayDados.email,
                     phone: telefoneNumeros
                 },
                 items: [{
@@ -319,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    preencherDadosAleatorios();
     configurarValoresDinamicos();
     carregarDadosUsuario();
 });
