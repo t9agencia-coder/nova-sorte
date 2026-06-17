@@ -1,29 +1,37 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>Checkout - Pagamento PIX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
-.checkout-container{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border-radius:20px;padding:30px;max-width:420px;width:100%;text-align:center;border:1px solid rgba(255,255,255,0.1)}
-.checkout-container h1{color:#fff;font-size:22px;margin-bottom:8px}
-.checkout-container p{color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:20px}
-.valor-box{background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;margin-bottom:25px}
-.valor-box .label{color:rgba(255,255,255,0.6);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
-.valor-box .valor{color:#fff;font-size:36px;font-weight:800}
-.loading-box{color:rgba(255,255,255,0.8);font-size:14px;padding:20px}
-.loading-box i{font-size:32px;margin-bottom:10px;color:#007bff}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(135deg,#0963a8 0%,#064a7a 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;color:#333;line-height:1.5}
+.checkout-wrapper{max-width:420px;width:100%;text-align:center}
+.logo-checkout{margin-bottom:20px}
+.logo-checkout img{max-width:100px;height:auto}
+.card-checkout{background:#fff;border-radius:20px;padding:25px 20px;box-shadow:0 15px 35px rgba(0,0,0,0.15)}
+.card-checkout h1{font-size:20px;font-weight:700;color:#111;margin-bottom:5px}
+.card-checkout .sub{font-size:13px;color:#888;margin-bottom:20px}
+.valor-card{background:linear-gradient(135deg,#f0f7ff,#e8f4fd);border:1px solid #cce5ff;border-radius:12px;padding:15px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.valor-card .label{font-size:11px;font-weight:700;color:#0056b3;text-transform:uppercase;letter-spacing:.5px}
+.valor-card .valor{font-size:28px;font-weight:800;color:#000}
+.loading-box{color:#555;font-size:14px;padding:30px 0;text-align:center}
+.loading-box i{font-size:36px;color:#007bff;margin-bottom:12px;display:block}
+.btn-voltar{display:inline-block;margin-top:15px;padding:10px 20px;background:#f0f0f0;color:#555;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;transition:.2s}
+.btn-voltar:hover{background:#e0e0e0}
 </style>
 </head><body>
-<div class="checkout-container">
-<h1>Finalizar Pagamento</h1>
-<p>Processando pagamento via PIX</p>
-<div class="valor-box">
+<div class="checkout-wrapper">
+<div class="card-checkout">
+<h1>Pagamento via PIX</h1>
+<p class="sub">Finalize o pagamento para continuar</p>
+<div class="valor-card">
 <div class="label">Valor a pagar</div>
 <div class="valor" id="checkout-valor">R$ --</div>
 </div>
 <div class="loading-box" id="checkout-loading">
 <i class="bx bx-loader-alt bx-spin"></i>
-<p>Abrindo janela de pagamento...</p>
+<p>Abrindo pagamento...</p>
+</div>
 </div>
 </div>
 <script src="js/checkout.js"></script>
