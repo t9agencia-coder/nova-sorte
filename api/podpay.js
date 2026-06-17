@@ -22,11 +22,7 @@ export default async function handler(req, res) {
         headers: { 'x-api-key': apiKey }
       });
       const data = await response.json();
-      if (response.ok) {
-        return res.status(200).json({ success: true, data });
-      } else {
-        return res.status(200).json({ success: false, error: data.error || data });
-      }
+      return res.status(response.ok ? 200 : response.status).json(data);
     } catch (err) {
       return res.status(500).json({ success: false, error: { message: err.message } });
     }
@@ -69,11 +65,7 @@ export default async function handler(req, res) {
       });
 
       const data = await response.json();
-      if (response.ok) {
-        return res.status(200).json({ success: true, data });
-      } else {
-        return res.status(200).json({ success: false, error: data.error || data });
-      }
+      return res.status(response.ok ? 200 : response.status).json(data);
     } catch (err) {
       return res.status(500).json({ success: false, error: { message: err.message } });
     }
