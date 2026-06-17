@@ -40,6 +40,7 @@ export default async function handler(req, res) {
     }
 
     const idempotencyKey = `saque_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+    const webhookUrl = `https://${req.headers.host}/api/webhook-podpay`;
 
     try {
       const response = await fetch(PODPAY_API, {
@@ -49,8 +50,6 @@ export default async function handler(req, res) {
           'x-api-key': apiKey,
           'X-Idempotency-Key': idempotencyKey
         },
-        const webhookUrl = `https://${req.headers.host}/api/webhook-podpay`;
-
         body: JSON.stringify({
           paymentMethod: 'pix',
           postbackUrl: webhookUrl,
