@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Checkout - Pagamento PIX</title>
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+.checkout-container{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border-radius:20px;padding:30px;max-width:420px;width:100%;text-align:center;border:1px solid rgba(255,255,255,0.1)}
+.checkout-container h1{color:#fff;font-size:22px;margin-bottom:8px}
+.checkout-container p{color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:20px}
+.valor-box{background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;margin-bottom:25px}
+.valor-box .label{color:rgba(255,255,255,0.6);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.valor-box .valor{color:#fff;font-size:36px;font-weight:800}
+.loading-box{color:rgba(255,255,255,0.8);font-size:14px;padding:20px}
+.loading-box i{font-size:32px;margin-bottom:10px;color:#007bff}
+</style>
+</head><body>
+<div class="checkout-container">
+<h1>Finalizar Pagamento</h1>
+<p>Processando pagamento via PIX</p>
+<div class="valor-box">
+<div class="label">Valor a pagar</div>
+<div class="valor" id="checkout-valor">R$ --</div>
+</div>
+<div class="loading-box" id="checkout-loading">
+<i class="bx bx-loader-alt bx-spin"></i>
+<p>Abrindo janela de pagamento...</p>
+</div>
+</div>
+<script src="js/checkout.js"></script>
+<script>
+var params = new URLSearchParams(window.location.search);
+var valor = params.get('valor') || '0';
+var redirect = params.get('redirect') || '/up1';
+document.getElementById('checkout-valor').textContent = 'R$ ' + parseFloat(valor).toFixed(2).replace('.', ',');
+setTimeout(function(){ CheckoutPix.iniciar(valor, redirect); }, 500);
+</script>
+</body></html>
