@@ -1,4 +1,4 @@
-const GeradorPix = {
+var GeradorPix = {
     modalId: 'modal-pix-simples',
     timerInterval: null,
     pollingInterval: null,
