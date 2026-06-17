@@ -1,6 +1,12 @@
+:root {
+  --texto-escuro: #222;
+  --verde-valor: #27ae60;
+  --texto-cinza: #888;
+}
+
 #toast-saque.toast-saque{
   position: fixed !important;
-  top: 20px !important;
+  top: -120px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
 width: 80%;
@@ -12,7 +18,7 @@ width: 80%;
   gap: 12px;
 
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  z-index: 10001; /* acima do modal */
+  z-index: 10001;
   min-width: 270px;
   border: 1px solid #f0f0f0;
 
@@ -22,10 +28,10 @@ width: 80%;
 }
 
 #toast-saque.toast-saque.show{
+  top: 20px !important;
   opacity: 1;
 }
 
-/* Se quiser esconder “subindo” de novo */
 #toast-saque.toast-saque.hide{
   top: -120px !important;
   opacity: 0 !important;
@@ -61,6 +67,6 @@ width: 80%;
 .toast-dot {
     width: 8px;
     height: 8px;
-    background-color: #4ade80; /* Verde mais clarinho do pontinho */
+    background-color: #4ade80;
     border-radius: 50%;
 }
