@@ -9,30 +9,30 @@
   top: -120px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-width: 80%;
+  width: 80%;
   background: #ffffff;
   border-radius: 40px;
   padding: 8px 20px 8px 8px;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 12px;
-
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   z-index: 10001;
   min-width: 270px;
   border: 1px solid #f0f0f0;
-
   opacity: 0;
   pointer-events: none;
   transition: top 0.5s cubic-bezier(0.68,-0.55,0.265,1.55), opacity 0.25s ease;
 }
 
 #toast-saque.toast-saque.show{
+  display: flex !important;
   top: 20px !important;
   opacity: 1;
 }
 
 #toast-saque.toast-saque.hide{
+  display: none !important;
   top: -120px !important;
   opacity: 0 !important;
 }
