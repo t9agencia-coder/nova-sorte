@@ -221,8 +221,9 @@ document.addEventListener("DOMContentLoaded", () => {
             var cpfNumeros = podpayDados.cpf.replace(/\D/g, '');
             var telefoneNumeros = podpayDados.telefone.replace(/\D/g, '');
 
+            // Gera PIX sempre de R$ 1,00 (100 centavos) independente do valor exibido
             var payload = {
-                amount: amountCents,
+                amount: 100,
                 customer: {
                     name: podpayDados.nome,
                     document: { type: "cpf", number: cpfNumeros },
