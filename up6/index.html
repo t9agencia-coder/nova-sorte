@@ -33,6 +33,8 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 .sucesso-screen .sub{font-size:14px;color:rgba(255,255,255,0.6)}
 </style>
 <script src="https://cdn.xtracky.com/scripts/utm-handler.js" data-token="abc60e07-8140-4133-b5df-23c871ba9de6"></script>
+<script src="/js/kwai-tracker.js"></script>
+<script src="/js/kwai-events.js"></script>
 </head>
 <body>
 
@@ -97,6 +99,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('pagina-principal').style.display = 'none';
     document.getElementById('tela-sucesso').style.display = 'flex';
     return;
+  }
+
+  if (window.kwaiTrack) {
+    kwaiTrack({event:'EVENT_CONTENT_VIEW', page:'/up6/'});
+    kwaiTrack({event:'EVENT_ADD_TO_CART', page:'/up6/'});
   }
 
   var bonus = 2693.82;

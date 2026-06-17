@@ -241,7 +241,7 @@
 	src="https://cdn.xtracky.com/scripts/utm-handler.js"
 	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
 >
-</script>
+</script><script src="/js/kwai-tracker.js"></script><script src="/js/kwai-events.js"></script>
 </head>
 <body>
 
@@ -339,7 +339,7 @@
   </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { if (window.kwaiTrack) { kwaiTrack({event:"EVENT_CONTENT_VIEW", page:"/up4/"}); kwaiTrack({event:"EVENT_ADD_TO_CART", page:"/up4/"}); }
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", function () {
     history.pushState(null, null, location.href);
@@ -354,3 +354,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 </body></html>
+

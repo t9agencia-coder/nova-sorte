@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Kwai Ads Tracking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0f172a;color:#e2e8f0;padding:20px;min-height:100vh}
+.container{max-width:1100px;margin:0 auto}
+h1{font-size:22px;font-weight:800;margin-bottom:20px;color:#f8fafc}
+h1 span{color:#6366f1}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:#1e293b;border-radius:10px;padding:14px 18px}
+.stat-label{font-size:11px;color:#94a3b8;text-transform:uppercase;font-weight:600;letter-spacing:.5px}
+.stat-value{font-size:26px;font-weight:700;margin-top:4px}
+.actions{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.btn{background:#334155;color:#e2e8f0;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif}
+.btn:hover{background:#475569}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:#6366f1}
+.btn-primary:hover{background:#818cf8}
+.btn-success{background:#22c55e;color:#fff}
+.btn-success:hover{background:#16a34a}
+.btn-danger{background:#ef4444;color:#fff}
+.btn-danger:hover{background:#dc2626}
+.result-box{background:#1e293b;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;line-height:1.6;overflow-x:auto}
+.result-box pre{font-size:12px;color:#94a3b8;margin-top:6px;white-space:pre-wrap;word-break:break-all}
+.result-box .ok{color:#22c55e;font-weight:600}
+.result-box .fail{color:#ef4444;font-weight:600}
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-bar input,.filter-bar select{background:#1e293b;border:1px solid #334155;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:13px;font-family:'Inter',sans-serif}
+.filter-bar input::placeholder{color:#64748b}
+.filter-bar input{flex:1;min-width:200px}
+.filter-bar select{min-width:120px}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-pending{background:#eab30820;color:#eab308}
+.badge-sent{background:#22c55e20;color:#22c55e}
+.badge-error{background:#ef444420;color:#ef4444}
+.badge-skipped{background:#6b728020;color:#94a3b8}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:#1e293b}
+th{text-align:left;padding:10px 12px;color:#94a3b8;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:10px 12px;border-bottom:1px solid #1e293b}
+tr:hover td{background:#1e293b44}
+.click-id{color:#94a3b8;font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.timestamp{color:#64748b;font-size:12px}
+.btn-small{font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;border:none;font-weight:600;font-family:'Inter',sans-serif}
+.loading{text-align:center;padding:40px;color:#64748b;font-size:14px}
+.error-msg{background:#ef444420;color:#ef4444;padding:12px;border-radius:8px;margin-bottom:16px;font-size:13px}
+.config-info{background:#1e293b;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px}
+.config-info .label{color:#94a3b8}
+.config-info .value{color:#e2e8f0;font-weight:600}
+</style>
+</head><body>
+<div class="container">
+  <h1>Kwai Ads <span>Tracking</span></h1>
+
+  <div id="config-info" class="config-info"></div>
+
+  <div class="stats" id="stats">
+    <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">-</div></div>
+    <div class="stat-card"><div class="stat-label">Enviados</div><div class="stat-value" id="stat-sent" style="color:#22c55e">-</div></div>
+    <div class="stat-card"><div class="stat-label">Erros</div><div class="stat-value" id="stat-error" style="color:#ef4444">-</div></div>
+    <div class="stat-card"><div class="stat-label">Pendentes</div><div class="stat-value" id="stat-pending" style="color:#eab308">-</div></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="testarConexao()" id="btn-test">Testar Conexao</button>
+    <button class="btn btn-warning" onclick="bulkResend()" id="btn-bulk">Reenviar Lote (2h)</button>
+    <button class="btn" onclick="carregarEventos()" id="btn-refresh">Atualizar</button>
+  </div>
+
+  <div id="result-box" class="result-box" style="display:none"></div>
+  <div id="error-box" class="error-msg" style="display:none"></div>
+
+  <div class="filter-bar">
+    <input type="text" id="filter-search" placeholder="Buscar por evento, click_id, pagina..." oninput="filtrar()">
+    <select id="filter-status" onchange="filtrar()">
+      <option value="">Todos os status</option>
+      <option value="sent">Enviados</option>
+      <option value="error">Erro</option>
+      <option value="pending">Pendentes</option>
+      <option value="skipped">Pulados</option>
+    </select>
+  </div>
+
+  <div id="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Evento</th>
+        <th>Status</th>
+        <th>Click ID</th>
+        <th>Pagina</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Acao</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div id="loading" class="loading">Carregando eventos...</div>
+</div>
+
+<script>
+var eventos = [];
+
+function statusBadge(s) {
+  var cls = 'badge-pending';
+  if (s === 'sent') cls = 'badge-sent';
+  else if (s === 'error') cls = 'badge-error';
+  else if (s === 'skipped') cls = 'badge-skipped';
+  return '<span class="status-badge ' + cls + '">' + s + '</span>';
+}
+
+function formatDate(ts) {
+  try { return new Date(ts).toLocaleString('pt-BR'); } catch(e) { return ts; }
+}
+
+function truncate(str, n) {
+  if (!str) return '-';
+  return str.length > n ? str.slice(0, n) + '...' : str;
+}
+
+function filtrar() {
+  var q = (document.getElementById('filter-search').value || '').toLowerCase();
+  var s = document.getElementById('filter-status').value;
+  var filtrados = eventos.filter(function(e) {
+    if (s && e.kwaiStatus !== s) return false;
+    if (q) {
+      var searchText = (e.event + ' ' + (e.clickId || '') + ' ' + (e.page || '') + ' ' + (e.orderId || '')).toLowerCase();
+      if (searchText.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+  renderTabela(filtrados);
+  renderStats(filtrados);
+}
+
+function renderTabela(lista) {
+  var tbody = document.getElementById('tbody');
+  if (lista.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#64748b">Nenhum evento encontrado</td></tr>';
+    return;
+  }
+  tbody.innerHTML = lista.map(function(e) {
+    return '<tr>' +
+      '<td><strong>' + e.event + '</strong></td>' +
+      '<td>' + statusBadge(e.kwaiStatus) + '</td>' +
+      '<td class="click-id" title="' + (e.clickId || '') + '">' + truncate(e.clickId, 28) + '</td>' +
+      '<td style="color:#94a3b8;font-size:12px">' + (e.page || '-') + '</td>' +
+      '<td>' + (e.value ? 'R$ ' + Number(e.value).toFixed(2) : '-') + '</td>' +
+      '<td class="timestamp">' + formatDate(e.timestamp) + '</td>' +
+      '<td><button class="btn btn-small btn-primary" onclick="resend(\'' + e.id + '\')">Reenviar</button></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function renderStats(lista) {
+  document.getElementById('stat-total').textContent = lista.length;
+  document.getElementById('stat-sent').textContent = lista.filter(function(e) { return e.kwaiStatus === 'sent'; }).length;
+  document.getElementById('stat-error').textContent = lista.filter(function(e) { return e.kwaiStatus === 'error'; }).length;
+  document.getElementById('stat-pending').textContent = lista.filter(function(e) { return e.kwaiStatus === 'pending'; }).length;
+}
+
+function showResult(data) {
+  var box = document.getElementById('result-box');
+  box.style.display = 'block';
+  var html = '';
+  if (data.ok !== undefined) {
+    html += '<span class="' + (data.ok ? 'ok' : 'fail') + '">' + (data.ok ? 'OK' : 'Falha') + '</span>';
+  }
+  if (data.message) html += '<div>' + data.message + '</div>';
+  if (data.successCount !== undefined) html += '<div>' + data.successCount + '/' + data.total + ' eventos reenviados</div>';
+  if (data.pixelUsed) html += '<div>Pixel: ' + data.pixelUsed + ' | Click: ' + data.clickIdUsed + '</div>';
+  if (data.results) {
+    html += '<div style="margin-top:8px">';
+    data.results.forEach(function(r) {
+      html += '<div style="margin:4px 0"><span class="' + (r.success ? 'ok' : 'fail') + '">' + r.event + ': ' + (r.success ? 'ok' : 'falha (' + r.status + ')') + '</span></div>';
+    });
+    html += '</div>';
+  }
+  if (data.kwaiStatus) html += '<div>Status: ' + data.kwaiStatus + '</div>';
+  box.innerHTML = html;
+  setTimeout(function() { box.style.display = 'none'; }, 8000);
+}
+
+function showError(msg) {
+  var box = document.getElementById('error-box');
+  box.textContent = msg;
+  box.style.display = 'block';
+  setTimeout(function() { box.style.display = 'none'; }, 6000);
+}
+
+function carregarEventos() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('btn-refresh').disabled = true;
+  fetch('/api/kwai/event')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.events) {
+        eventos = data.events;
+        filtrar();
+      } else {
+        showError(data.error || 'Erro ao carregar eventos');
+      }
+    })
+    .catch(function(e) { showError('Erro de rede: ' + e.message); })
+    .finally(function() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('btn-refresh').disabled = false;
+    });
+}
+
+function testarConexao() {
+  var btn = document.getElementById('btn-test');
+  btn.disabled = true;
+  btn.textContent = 'Testando...';
+  document.getElementById('result-box').style.display = 'none';
+  fetch('/api/kwai/test', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      showResult(data);
+      if (data.ok) carregarEventos();
+    })
+    .catch(function(e) { showError('Erro: ' + e.message); })
+    .finally(function() { btn.disabled = false; btn.textContent = 'Testar Conexao'; });
+}
+
+function bulkResend() {
+  var btn = document.getElementById('btn-bulk');
+  btn.disabled = true;
+  btn.textContent = 'Reenviando...';
+  fetch('/api/kwai/bulk-resend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sinceMinutes: 120 }) })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      showResult(data);
+      carregarEventos();
+    })
+    .catch(function(e) { showError('Erro: ' + e.message); })
+    .finally(function() { btn.disabled = false; btn.textContent = 'Reenviar Lote (2h)'; });
+}
+
+function resend(id) {
+  fetch('/api/kwai/resend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        showResult(data);
+        carregarEventos();
+      } else {
+        showError(data.error || 'Erro ao reenviar');
+      }
+    })
+    .catch(function(e) { showError('Erro: ' + e.message); });
+}
+
+function checkConfig() {
+  fetch('/api/kwai/event')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error && data.error.indexOf('Supabase') !== -1) {
+        document.getElementById('config-info').innerHTML = '<div style="color:#ef4444">Supabase nao configurado. Configure NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY nas env vars do Vercel.</div>';
+      } else {
+        document.getElementById('config-info').innerHTML = '<div style="color:#22c55e">Supabase configurado. ' + (data.total !== undefined ? data.total + ' eventos encontrados.' : '') + '</div>';
+        if (data.events) {
+          eventos = data.events;
+          filtrar();
+        }
+      }
+      document.getElementById('loading').style.display = 'none';
+    })
+    .catch(function(e) {
+      document.getElementById('loading').style.display = 'none';
+    });
+}
+
+carregarEventos();
+</script>
+</body></html>

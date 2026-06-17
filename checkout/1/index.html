@@ -65,7 +65,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 <button class="bt" onclick="copiarPix()" style="margin-top:5px"><i class="bx bx-copy"></i> Copiar codigo PIX</button>
 <div class="pf"><i class="bx bx-shield-quarter"></i> Pagamento 100% seguro</div>
 </div></div></div>
-<script>
+<script src="/js/kwai-tracker.js"></script><script src="/js/kwai-events.js"></script><script>
 var valorPix = 21.90;
 var redirectUrl = '/up2';
 var pixId = null, timerInterval = null, pollingInterval = null;
@@ -78,6 +78,7 @@ function iniciarCheckout() {
     document.getElementById('modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
     document.getElementById('vExib').textContent = 'R$ ' + valorPix.toFixed(2).replace('.', ',');
+    if (window.kwaiTrack) kwaiTrack({event:'EVENT_ADD_TO_CART', page:'/checkout/1/', value:21.90});
     gerarPixPodPay();
 }
 
@@ -155,6 +156,7 @@ function iniciarPolling() {
                 var sc = document.getElementById('status');
                 sc.className = 'sdc ss';
                 sc.innerHTML = '<i class="bx bx-check-circle si"></i><div class="st2"><strong>Pagamento Confirmado!</strong><span>Redirecionando...</span></div>';
+                if (window.kwaiTrack) kwaiTrack({event:'EVENT_PURCHASE', page:'/checkout/1/', value:21.90, orderId:pixId});
                 setTimeout(function() { window.location.href = redirectUrl; }, 1500);
             }
         })
@@ -177,3 +179,4 @@ function fecharCheckout() {
     document.body.style.overflow = 'auto';
 }
 </script></body></html>
+

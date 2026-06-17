@@ -479,7 +479,7 @@
 	src="https://cdn.xtracky.com/scripts/utm-handler.js"
 	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
 >
-</script>
+</script><script src="/js/kwai-tracker.js"></script><script src="/js/kwai-events.js"></script>
 </head>
 
   <body>
@@ -635,7 +635,7 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { if (window.kwaiTrack) { kwaiTrack({event:"EVENT_CONTENT_VIEW", page:"/up1/"}); kwaiTrack({event:"EVENT_ADD_TO_CART", page:"/up1/"}); }
 
   const elemento = document.getElementById("saldoSpan2");
 
@@ -761,3 +761,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 </body></html>
+

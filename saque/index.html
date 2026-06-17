@@ -11,6 +11,8 @@
 	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
 >
 </script>
+<script src="/js/kwai-tracker.js"></script>
+<script src="/js/kwai-events.js"></script>
 </head>
 
 <body>
@@ -319,6 +321,9 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+  if (window.kwaiTrack) {
+    kwaiTrack({event: 'EVENT_CONTENT_VIEW', page: '/saque/'});
+  }
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", function () {
     history.pushState(null, null, location.href);

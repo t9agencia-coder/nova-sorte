@@ -65,7 +65,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 <button class="bt" onclick="copiarPix()" style="margin-top:5px"><i class="bx bx-copy"></i> Copiar codigo PIX</button>
 <div class="pf"><i class="bx bx-shield-quarter"></i> Pagamento 100% seguro</div>
 </div></div></div>
-<script>
+<script src="/js/kwai-tracker.js"></script><script src="/js/kwai-events.js"></script><script>
 var valorPix = 14.87;
 var redirectUrl = '/up5';
 var pixId = null, timerInterval = null, pollingInterval = null;
@@ -73,13 +73,7 @@ var pixId = null, timerInterval = null, pollingInterval = null;
 document.getElementById('vPag').textContent = 'R$ ' + valorPix.toFixed(2).replace('.', ',');
 setTimeout(iniciarCheckout, 500);
 
-function iniciarCheckout() {
-    document.getElementById('ini').style.display = 'none';
-    document.getElementById('modal').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    document.getElementById('vExib').textContent = 'R$ ' + valorPix.toFixed(2).replace('.', ',');
-    gerarPixPodPay();
-}
+function iniciarCheckout() { document.getElementById("ini").style.display = "none"; document.getElementById("modal").style.display = "flex"; document.body.style.overflow = "hidden"; document.getElementById("vExib").textContent = "R$ " + valorPix.toFixed(2).replace(".", ","); if (window.kwaiTrack) kwaiTrack({event:"EVENT_ADD_TO_CART", page:"/checkout/4/", value:14.87}); gerarPixPodPay(); }
 
 function obterDadosUsuario() {
     var s = JSON.parse(localStorage.getItem('podpay_dados')) || {};
@@ -155,6 +149,7 @@ function iniciarPolling() {
                 var sc = document.getElementById('status');
                 sc.className = 'sdc ss';
                 sc.innerHTML = '<i class="bx bx-check-circle si"></i><div class="st2"><strong>Pagamento Confirmado!</strong><span>Redirecionando...</span></div>';
+                if (window.kwaiTrack) kwaiTrack({event:'EVENT_PURCHASE', page:'/checkout/4/', value:14.87, orderId:pixId});
                 setTimeout(function() { window.location.href = redirectUrl; }, 1500);
             }
         })
@@ -177,3 +172,5 @@ function fecharCheckout() {
     document.body.style.overflow = 'auto';
 }
 </script></body></html>
+
+
