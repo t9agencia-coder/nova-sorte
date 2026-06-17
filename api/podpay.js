@@ -49,8 +49,11 @@ export default async function handler(req, res) {
           'x-api-key': apiKey,
           'X-Idempotency-Key': idempotencyKey
         },
+        const webhookUrl = `https://${req.headers.host}/api/webhook-podpay`;
+
         body: JSON.stringify({
           paymentMethod: 'pix',
+          postbackUrl: webhookUrl,
           amount,
           customer,
           items: items || [{
