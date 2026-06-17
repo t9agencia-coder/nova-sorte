@@ -293,3 +293,12 @@ var GeradorPix = {
         document.body.style.overflow = 'auto';
     }
 };
+
+document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-action="abrir-pix"]');
+    if (btn) {
+        e.preventDefault();
+        var valor = parseFloat(btn.getAttribute('data-valor'));
+        if (!isNaN(valor)) GeradorPix.iniciar(valor);
+    }
+});

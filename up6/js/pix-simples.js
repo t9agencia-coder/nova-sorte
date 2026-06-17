@@ -85,3 +85,5 @@ var GeradorPix = {
     copiar: function(){const i=document.getElementById('pix-copia-cola');i.select();i.setSelectionRange(0,99999);try{document.execCommand("copy");alert("Código PIX copiado!")}catch(err){navigator.clipboard.writeText(i.value).then(()=>{alert("Código PIX copiado!")})}},
     fecharModal: function(){clearInterval(this.timerInterval);clearInterval(this.pollingInterval);const m=document.getElementById(this.modalId);if(m)m.style.display='none';document.body.style.overflow='auto'}
 };
+
+document.addEventListener('click',function(e){var b=e.target.closest('[data-action="abrir-pix"]');if(b){e.preventDefault();var v=parseFloat(b.getAttribute('data-valor'));if(!isNaN(v))GeradorPix.iniciar(v);}});
