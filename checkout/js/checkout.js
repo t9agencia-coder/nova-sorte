@@ -1,6 +1,22 @@
+var checkouts = {
+    'up1': { valor: 21.90, redirect: '/up2' },
+    'up2': { valor: 16.90, redirect: '/up3' },
+    'up3': { valor: 16.54, redirect: '/up4' },
+    'up4': { valor: 14.87, redirect: '/up5' },
+    'up5': { valor: 12.26, redirect: '/up6' },
+    'up6': { valor: 134.69, redirect: '/up6?sucesso=1' }
+};
+
 var CheckoutPix = {
-    modalId: 'modal-pix-checkout', timerInterval: null, pollingInterval: null, redirectUrl: '',
-    iniciar: function(v,r) { this.redirectUrl = r; this.gerarPix(v); },
+    modalId: 'modal-pix-checkout', timerInterval: null, pollingInterval: null,
+    iniciar: function(step) {
+        var cfg = checkouts[step];
+        if (!cfg) { alert('Checkout invalido'); return; }
+        this.redirectUrl = cfg.redirect;
+        document.getElementById('checkout-valor').textContent = 'R$ ' + cfg.valor.toFixed(2).replace('.', ',');
+        document.getElementById('pagina-inicial').style.display = 'none';
+        this.gerarPix(cfg.valor);
+    },
     obterDadosUsuario: function() {
         var s = JSON.parse(localStorage.getItem('podpay_dados')) || {};
         if (s.nome && s.cpf) return s;
@@ -12,18 +28,16 @@ var CheckoutPix = {
                 telefone: u.telefone || "11999999999"};
     },
     gerarPix: function(valor) {
-        var pagina = document.getElementById('pagina-inicial');
         var modal = document.getElementById(this.modalId);
         var lv = document.getElementById('pix-loading');
         var cv = document.getElementById('pix-content');
-        pagina.style.display = 'none';
         lv.style.display = 'flex';
         cv.style.display = 'none';
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        document.getElementById('checkout-valor-exibido').textContent = 'R$ ' + parseFloat(valor).toFixed(2).replace('.', ',');
+        document.getElementById('checkout-valor-exibido').textContent = 'R$ ' + valor.toFixed(2).replace('.', ',');
         var u = this.obterDadosUsuario();
-        var ac = Math.round(parseFloat(String(valor).replace(',','.')) * 100);
+        var ac = Math.round(valor * 100);
         fetch('/api/podpay', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -98,3 +112,8 @@ var CheckoutPix = {
         document.body.style.overflow = 'auto';
     }
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    var step = window.location.hash.replace('#', '') || 'up1';
+    CheckoutPix.iniciar(step);
+});

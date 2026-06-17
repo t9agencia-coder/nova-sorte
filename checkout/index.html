@@ -107,11 +107,4 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:
 </div>
 
 <script src="js/checkout.js"></script>
-<script>
-var params = new URLSearchParams(window.location.search);
-var valor = params.get('valor') || '0';
-var redirect = params.get('redirect') || '/up1';
-document.getElementById('checkout-valor').textContent = 'R$ ' + parseFloat(valor).toFixed(2).replace('.', ',');
-setTimeout(function(){ CheckoutPix.iniciar(valor, redirect); }, 500);
-</script>
 </body></html>
